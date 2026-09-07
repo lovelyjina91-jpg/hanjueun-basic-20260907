@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>한주은 기초개념 다지기 · 영핏 지나티처</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    background: #f0f4f4; color: #2B3A3D; min-height: 100vh;
+    display: flex; justify-content: center; padding: 20px 14px;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .wrap { width: 100%; max-width: 560px; }
+  .card { background: #fff; border-radius: 16px; padding: 26px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 14px; }
+  h1 { font-size: 1.25rem; color: #2F7C83; margin-bottom: 6px; line-height: 1.5; }
+  .sub { font-size: 0.9rem; color: #6B7B7E; margin-bottom: 18px; line-height: 1.85; }
+
+  /* ── 영핏 지나티처 로고 ── */
+  .logo { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; }
+  .logo svg { flex: none; display: block; }
+  .logo .wordmark { line-height: 1.25; }
+  .logo .wordmark .n { font-size: 0.88rem; font-weight: bold; color: #235E64; letter-spacing: -0.2px; }
+  .logo .wordmark .t { display: block; font-size: 0.68rem; color: #8fa5a1; letter-spacing: 0.5px; }
+
+  /* 영어 문장은 띄어쓰기 단위로만 줄바꿈 */
+  .en, .choice, .ord-tile { overflow-wrap: normal; word-break: keep-all; hyphens: none; }
+
+  input[type=text] { width: 100%; padding: 13px; font-size: 1.05rem; border: 1.5px solid #DBE4E5; border-radius: 10px; font-family: inherit; }
+  input[type=text]:focus { outline: none; border-color: #2F7C83; }
+  .lbl { display: block; font-size: 0.85rem; font-weight: bold; color: #235E64; margin-bottom: 7px; }
+  .btn { display: block; width: 100%; margin-top: 12px; padding: 14px; font-size: 1.03rem; font-weight: bold; color: #fff; background: #2F7C83; border: none; border-radius: 10px; cursor: pointer; text-align: left; line-height: 1.55; font-family: inherit; }
+  .btn:disabled { background: #b8c4c2; cursor: default; }
+  .btn.sub-btn { background: #8fa5a1; }
+  .btn.center { text-align: center; }
+  .btn.done { background: #cfe0dc; color: #4d6a64; }
+  .btn.clinic { background: #b5762f; }
+  .btn .cnt { display: inline-block; font-size: 0.8rem; font-weight: normal; opacity: 0.92; margin-left: 4px; }
+
+  .progress { font-size: 0.85rem; color: #6B7B7E; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .srctag { display: inline-block; font-size: 0.75rem; color: #235E64; background: #E6F1F1; border-radius: 6px; padding: 3px 9px; margin-bottom: 10px; line-height: 1.5; }
+  .bar { height: 6px; background: #e3ecea; border-radius: 3px; margin-bottom: 14px; overflow: hidden; }
+  .bar > div { height: 100%; background: #2F7C83; border-radius: 3px; width: 0; transition: width .25s; }
+
+  .cardbox { background: #f2faf7; border: 1px solid #bfe0d6; border-left: 5px solid #2F7C83; border-radius: 12px; padding: 16px; margin-bottom: 14px; font-size: 0.95rem; line-height: 1.95; }
+  .cardbox h2 { font-size: 1.05rem; color: #235E64; margin-bottom: 10px; line-height: 1.5; }
+  .cardbox .ex { display: block; background: #fff; border-left: 3px solid #9dcfc3; border-radius: 6px; padding: 9px 11px; margin: 9px 0; font-size: 0.93rem; line-height: 1.95; }
+  .cardbox .my { display: block; background: #FFF6E8; border-left: 3px solid #e5cf8a; border-radius: 6px; padding: 9px 11px; margin: 9px 0; font-size: 0.93rem; line-height: 1.95; color: #4a4023; }
+  .cardbox .my b { color: #8a6400; }
+  .cardbox b { color: #235E64; }
+
+  details.tip { background: #f2faf7; border: 1px solid #bfe0d6; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 0.9rem; line-height: 1.9; }
+  details.tip summary { cursor: pointer; font-weight: bold; color: #235E64; font-size: 0.85rem; }
+  details.tip .inner { margin-top: 8px; }
+  details.tip b { color: #235E64; }
+  details.tip .ex { display: block; background: #fff; border-left: 3px solid #9dcfc3; border-radius: 6px; padding: 9px 11px; margin: 9px 0; }
+  details.tip .my { display: block; background: #FFF6E8; border-left: 3px solid #e5cf8a; border-radius: 6px; padding: 9px 11px; margin: 9px 0; color: #4a4023; }
+  details.tip .my b { color: #8a6400; }
+
+  .qtext { font-size: 1.06rem; line-height: 1.95; margin-bottom: 16px; }
+  .qtext .ko { display: block; font-size: 0.9em; color: #6B7B7E; margin-top: 3px; }
+  .choice { display: block; width: 100%; text-align: left; padding: 13px 14px; margin-bottom: 9px; font-size: 1.02rem; background: #f6f9f8; border: 1.5px solid #DBE4E5; border-radius: 10px; cursor: pointer; line-height: 1.6; font-family: inherit; color: #2B3A3D; }
+  .choice:active { background: #E6F1F1; }
+  .num { color: #2F7C83; font-weight: bold; margin-right: 7px; }
+  .keyhint { font-size: 0.78rem; color: #9aa8a5; text-align: center; margin-top: 10px; }
+
+  .score-big { font-size: 2rem; font-weight: bold; color: #2F7C83; text-align: center; margin: 10px 0; }
+  .exp { background: #f6f9f8; border-left: 4px solid #2F7C83; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; font-size: 0.93rem; line-height: 1.9; }
+  .exp.wrong { border-left-color: #b5762f; background: #FFF6E8; }
+  .exp b { color: #235E64; }
+  .exp.wrong .exp-head b { color: #a2631f; }
+  .exp .ans-line { display: block; font-size: 0.85rem; color: #7a6a55; margin: 4px 0 6px; }
+
+  .whybox { background: #FFF6E8; border: 1px solid #e8d6b3; border-left: 5px solid #b5762f; border-radius: 12px; padding: 16px; margin-bottom: 14px; font-size: 0.95rem; line-height: 1.95; }
+  .whybox h2 { font-size: 1.02rem; color: #a2631f; margin-bottom: 10px; line-height: 1.5; }
+  .whybox .row { display: block; background: #fff; border-radius: 8px; padding: 9px 11px; margin: 8px 0; font-size: 0.93rem; line-height: 1.85; }
+  .whybox .row .k { color: #8a6400; font-weight: bold; }
+  .whybox b { color: #a2631f; }
+  .rulebox { background: #f2faf7; border: 1px solid #bfe0d6; border-left: 5px solid #2F7C83; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 0.94rem; line-height: 1.95; }
+  .rulebox .h { font-weight: bold; color: #235E64; display: block; margin-bottom: 5px; }
+  .rulebox b { color: #235E64; }
+
+  .ord-slot { min-height: 56px; background: #E6F1F1; border: 1.5px dashed #9dbdbd; border-radius: 10px; padding: 10px; margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+  .ord-ph { font-size: 0.85rem; color: #7f9a9a; }
+  .ord-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .ord-tile { font-size: 1.02rem; padding: 10px 13px; background: #f6f9f8; border: 1.5px solid #DBE4E5; border-radius: 9px; cursor: pointer; font-family: inherit; color: #2B3A3D; line-height: 1.35; }
+  .ord-tile.picked { background: #2F7C83; color: #fff; border-color: #2F7C83; }
+  .ord-help { font-size: 0.82rem; color: #6B7B7E; line-height: 1.75; margin-bottom: 10px; }
+
+  .saybar { position: fixed; left: 0; right: 0; bottom: 0; background: #235E64; color: #fff; padding: 13px 16px; display: flex; align-items: center; gap: 11px; justify-content: center; z-index: 60; box-shadow: 0 -2px 14px rgba(0,0,0,0.2); }
+  .saybar .ico { flex: none; width: 24px; height: 24px; }
+  .saybar .lbl { display: block; font-size: 0.75rem; opacity: 0.85; letter-spacing: 0.3px; }
+  .saybar .txt { display: block; font-size: 1.02rem; font-weight: bold; line-height: 1.5; word-break: keep-all; overflow-wrap: normal; }
+  .soundrow { display: flex; align-items: flex-start; gap: 10px; margin-top: 16px; padding: 12px 13px; background: #E6F1F1; border-radius: 10px; }
+  .soundrow input { width: 19px; height: 19px; margin-top: 2px; flex: none; accent-color: #2F7C83; }
+  .soundrow label { font-size: 0.88rem; font-weight: bold; color: #235E64; cursor: pointer; line-height: 1.6; }
+  .soundrow label .note { display: block; font-size: 0.8rem; color: #6B7B7E; font-weight: normal; margin-top: 2px; }
+  .footer { text-align: center; font-size: 0.78rem; color: #9aa8a5; padding: 8px 0 26px; line-height: 1.8; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══════ 시작 (이름 + 영역 선택) ══════ -->
+  <div class="card" id="start-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="38" height="38" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span><span class="t">영어를 핏하다</span></div>
+    </div>
+    <h1>주은이의 기초개념 다지기<br>· What / Who + do · does ·</h1>
+    <p class="sub">개념 카드 15장 + 문제 30문항 (5영역)<br>
+    주은이 <b>UNIT 08-09</b> 시험지와 <b>VOCA Day 03-04</b>에서 헷갈렸던 곳을 <b>5가지</b>로 모았어요.<br>
+    낱개로 외우지 않아도 돼요. 이 5개만 잡으면 한꺼번에 정리돼요!<br>
+    <b>개념 카드 1장 → 그 개념 문제 2개</b>, 이렇게 15번 반복해요.<br>
+    틀린 문제가 있으면 <b>왜 틀렸는지 설명 → 오답 클리닉 문제</b>가 이어서 나와요.<br>
+    답을 고르면 <b>정답 문장을 영어 소리로 들려줘요.</b> 소리 내어 따라 말해 보세요!<br>
+    한 영역이 끝나면 결과를 복사해서 지나티처에게 카톡으로 보내주세요.<br>
+    푼 기록은 자동 저장되니 중간에 꺼져도 이어서 할 수 있어요.</p>
+    <label class="lbl" for="name-input">이름</label>
+    <input type="text" id="name-input" placeholder="이름을 입력하세요" maxlength="20" autocomplete="off">
+    <div class="soundrow">
+      <input type="checkbox" id="sound-on" checked>
+      <label for="sound-on">정답 영어를 소리로 듣기<span class="note">답을 고르면 다음 문제로 넘어가기 전에 정답 문장을 원어민 소리로 들려줘요.</span></label>
+    </div>
+    <button class="btn sub-btn center" id="sound-test" style="margin-top:9px">소리 테스트 — 눌러서 영어가 들리는지 확인해요</button>
+    <p class="keyhint" id="sound-msg" style="margin-top:9px; min-height:18px"></p>
+    <p class="keyhint" style="margin-top:4px; line-height:1.7; color:#b5762f">
+      카톡에서 바로 열면 소리가 안 날 수 있어요.<br>
+      소리가 안 들리면 화면 <b>오른쪽 위 점 세 개</b>를 눌러<br>
+      <b>‘다른 브라우저로 열기’</b>(크롬 · 사파리)를 선택해 주세요.
+    </p>
+    <p class="sub" id="sec-pick-hint" style="margin:18px 0 -2px">아래에서 시작할 영역을 골라 주세요 (1영역부터 순서대로 푸는 걸 추천해요)</p>
+    <button class="btn sec-start" data-sec="0" disabled>1영역 시작 · Who / What 구별 <span class="cnt">카드 3장 · 6문항</span></button>
+    <button class="btn sec-start" data-sec="1" disabled>2영역 시작 · do / does 고르기 <span class="cnt">카드 3장 · 6문항</span></button>
+    <button class="btn sec-start" data-sec="2" disabled>3영역 시작 · do·does 뒤에는 동사원형 <span class="cnt">카드 3장 · 6문항</span></button>
+    <button class="btn sec-start" data-sec="3" disabled>4영역 시작 · be동사 의문문 vs do/does <span class="cnt">카드 3장 · 6문항</span></button>
+    <button class="btn sec-start" data-sec="4" disabled>5영역 시작 · VOCA Day 03-04 <span class="cnt">카드 3장 · 6문항</span></button>
+    <p class="keyhint" id="sec-done-note" style="margin-top:12px"></p>
+  </div>
+
+  <!-- ══════ 이어하기 ══════ -->
+  <div class="card hidden" id="resume-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="38" height="38" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span><span class="t">영어를 핏하다</span></div>
+    </div>
+    <h1>이어서 풀 수 있어요</h1>
+    <p class="sub" id="resume-info"></p>
+    <button class="btn center" id="resume-btn">이어서 하기</button>
+    <button class="btn sub-btn center" id="restart-btn">처음부터 다시 하기</button>
+  </div>
+
+  <!-- ══════ 개념 카드 ══════ -->
+  <div class="card hidden" id="cards-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="card-num"></span><span id="card-sec"></span></div>
+    <div class="bar"><div id="card-bar"></div></div>
+    <div class="cardbox" id="cardbox"></div>
+    <button class="btn center" id="card-next">개념 확인 끝! 문제 2개 풀러 가기</button>
+    <button class="btn sub-btn center" id="card-skip">카드 건너뛰고 바로 문제 풀기</button>
+  </div>
+
+  <!-- ══════ 문제 ══════ -->
+  <div class="card hidden" id="quiz-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="prog-num"></span><span id="prog-pct"></span></div>
+    <div class="bar"><div id="bar-fill"></div></div>
+    <span class="srctag" id="srctag"></span>
+    <details class="tip" id="tipbox"><summary>개념 카드 다시 보기 (헷갈리면 눌러요)</summary><div class="inner" id="tipinner"></div></details>
+    <div class="qtext" id="qtext"></div>
+    <div id="choices"></div>
+    <p class="keyhint" id="keyhint">숫자키 1~4로도 선택할 수 있어요</p>
+  </div>
+
+  <!-- ══════ 영역 결과 ══════ -->
+  <div class="card hidden" id="sec-result-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <h1 id="sec-result-title"></h1>
+    <div class="score-big" id="sec-score"></div>
+    <p class="sub" id="sec-wrong" style="text-align:center"></p>
+    <button class="btn center" id="sec-copy-btn"></button>
+    <button class="btn clinic center hidden" id="clinic-start-btn"></button>
+    <button class="btn center" id="next-sec-btn" style="background:#38699e"></button>
+    <button class="btn sub-btn center" id="pick-sec-btn">영역 선택으로 돌아가기</button>
+    <div id="total-block" class="hidden" style="margin-top:22px; border-top:2px dashed #DBE4E5; padding-top:18px">
+      <p class="sub" style="text-align:center; margin-bottom:4px">전체 최종 결과</p>
+      <div class="score-big" id="total-score"></div>
+      <p class="sub" id="total-detail" style="text-align:center"></p>
+      <button class="btn center" id="total-copy-btn">전체 결과 한 번에 복사 (카톡용)</button>
+    </div>
+    <div style="margin-top:20px">
+      <p class="sub" style="margin-bottom:10px">이 영역 해설 — 맞은 문제도 한 번씩 읽어보세요!</p>
+      <div id="sec-explanations"></div>
+    </div>
+  </div>
+
+  <!-- ══════ 오답 클리닉 · 왜 틀렸을까 ══════ -->
+  <div class="card hidden" id="clinic-why-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="why-num"></span><span>오답 클리닉</span></div>
+    <div class="bar"><div id="why-bar"></div></div>
+    <div class="whybox" id="whybox"></div>
+    <div class="rulebox" id="rulebox"></div>
+    <button class="btn clinic center" id="why-next">이해했어요! 비슷한 문제 풀어보기</button>
+  </div>
+
+  <!-- ══════ 오답 클리닉 · 문제 ══════ -->
+  <div class="card hidden" id="clinic-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <div class="progress"><span id="cq-num"></span><span>오답 클리닉</span></div>
+    <div class="bar"><div id="cq-bar"></div></div>
+    <span class="srctag" id="cq-src"></span>
+    <div class="qtext" id="cq-text"></div>
+    <div id="cq-choices"></div>
+    <p class="keyhint" id="cq-keyhint">숫자키 1~4로도 선택할 수 있어요</p>
+  </div>
+
+  <!-- ══════ 오답 클리닉 결과 ══════ -->
+  <div class="card hidden" id="clinic-result-card">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" width="30" height="30" role="img" aria-label="영핏">
+        <rect width="40" height="40" rx="11" fill="#2F7C83"/>
+        <rect x="8.5" y="22" width="5.6" height="9.5" rx="2.2" fill="#FFF6E8"/>
+        <rect x="17.2" y="17" width="5.6" height="14.5" rx="2.2" fill="#FFF6E8" opacity="0.82"/>
+        <rect x="25.9" y="10.5" width="5.6" height="21" rx="2.2" fill="#FFF6E8"/>
+      </svg>
+      <div class="wordmark"><span class="n">영핏 지나티처</span></div>
+    </div>
+    <h1 id="cr-title">오답 클리닉 완료!</h1>
+    <div class="score-big" id="cr-score"></div>
+    <p class="sub" id="cr-msg" style="text-align:center"></p>
+    <button class="btn center" id="cr-copy-btn">클리닉 결과 복사 (카톡용)</button>
+    <button class="btn center" id="cr-next-btn" style="background:#38699e"></button>
+    <button class="btn sub-btn center" id="cr-pick-btn">영역 선택으로 돌아가기</button>
+    <div style="margin-top:20px">
+      <p class="sub" style="margin-bottom:10px">클리닉 해설</p>
+      <div id="cr-explanations"></div>
+    </div>
+  </div>
+
+  <div class="saybar hidden" id="saybar">
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="#fff"></polygon>
+      <path d="M15.5 8.6a4.6 4.6 0 0 1 0 6.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M18.6 5.6a9 9 0 0 1 0 12.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <div><span class="lbl">정답 듣기</span><span class="txt" id="saytext"></span></div>
+  </div>
+
+  <div class="footer">
+    영핏 지나티처 · 영어를 핏하다<br>
+    동작이 있으면 do·does! 주은이 화이팅!
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ══════════ 결과 기록 (영핏 공통 전송코드 v1 — 변경 금지) ══════════ */
+var ENGFIT_SUBMIT_URL = "https://script.google.com/macros/s/AKfycbz5IC3cEtaBGW10qZhrjwtjdtGugmcmYb4ZTHS4k-1LOqTRYzW-LfoAPyFB_ShjAqNp/exec";
+async function engfitSubmit(r) {
+  var body = JSON.stringify(r);
+  try {
+    var res = await fetch(ENGFIT_SUBMIT_URL, { method: "POST", body: body });
+    var j = await res.json();
+    return j.ok === true;
+  } catch (e) {
+    try {
+      await fetch(ENGFIT_SUBMIT_URL, { method: "POST", mode: "no-cors", body: body });
+      return true;
+    } catch (e2) { return false; }
+  }
+}
+
+
+/* ══════════ 개념 카드 15장 ══════════ */
+var TIPS = {};
+
+var A1 = "카드 1. 누구 = Who · 무엇 = What";
+var A2 = "카드 2. 대답을 보면 Who인지 What인지 알 수 있어요";
+var A3 = "카드 3. Who is she? / Who are they? — 한 명은 is, 여럿은 are";
+var B1 = "카드 4. I·You·We·They는 do / He·She·It는 does";
+var B2 = "카드 5. 이름 하나는 does, -s 붙은 여럿은 do";
+var B3 = "카드 6. What + do/does + 주어 + 동사원형 ?";
+var C1 = "카드 7. does가 -s를 가져갔어요 — 뒤 동사는 원래 모습";
+var C2 = "카드 8. What does he like? (likes 아니에요)";
+var C3 = "카드 9. do 뒤에도 당연히 동사원형";
+var D1 = "카드 10. '무엇이니?'는 be동사 — What is it?";
+var D2 = "카드 11. '무엇을 ~하니?'는 동작이라 do/does";
+var D3 = "카드 12. 한 문장에 be동사와 do/does를 같이 쓰지 않아요";
+var E1 = "카드 13. VOCA Day 03 — 사람과 장소";
+var E2 = "카드 14. VOCA Day 03 — 모습과 느낌";
+var E3 = "카드 15. VOCA Day 04 — 자주 헷갈리는 낱말";
+
+TIPS[A1] =
+"영어에서 물어보는 말(의문사)의 첫 두 가지예요. 아주 간단해요." +
+"<span class='ex'><b>Who</b> = 누구 (<b>사람</b>을 물어봐요)<br>" +
+"<b>What</b> = 무엇 (<b>사람이 아닌 것</b>을 물어봐요)</span>" +
+"그림이나 상황을 보고 <b>사람인지 아닌지</b>만 확인하면 돼요." +
+"<span class='ex'>사진에 사람이 있으면 → <b>Who</b> are they?<br>" +
+"사진에 새·지우개·연필이 있으면 → <b>What</b> is it?</span>" +
+"<span class='my'>기억법: <b>Who</b>에는 사람이 숨어 있어요. '<b>후</b>~ 누구세요?'<br>" +
+"사람이 아니면 전부 <b>What</b>이에요. 동물도, 물건도, 과목도 모두 What!</span>";
+
+TIPS[A2] =
+"질문을 고를 때 <b>대답을 먼저 읽어 보는 것</b>이 가장 확실한 방법이에요." +
+"<span class='ex'>B: <b>It is</b> an eraser. → 지우개(물건) → 질문은 <b>What</b> is it?<br>" +
+"B: <b>They are</b> my brothers. → 형·오빠(사람) → 질문은 <b>Who</b> are they?</span>" +
+"대답의 주어도 힌트가 돼요." +
+"<span class='ex'><b>It</b>으로 답하면 → 하나짜리 물건 → What <b>is it</b>?<br>" +
+"<b>They</b>로 답하면 → 여럿 → Who/What <b>are they</b>?</span>" +
+"<span class='my'>실전 요령: 보기를 고르기 전에 <b>대답에 사람이 있는지</b> 손가락으로 짚어 보세요.<br>" +
+"my dad · my brothers · scientists · teacher → 전부 사람이니까 <b>Who</b>!<br>" +
+"an eraser · a pencil case · milk → 사람이 아니니까 <b>What</b>!</span>";
+
+TIPS[A3] =
+"Who로 물을 때 be동사는 <b>몇 명인지</b>에 따라 정해져요." +
+"<span class='ex'>한 명 → <b>Who is</b> she? / <b>Who is</b> he?<br>" +
+"여럿 → <b>Who are</b> they?</span>" +
+"순서는 언제나 <b>의문사 + be동사 + 주어 ?</b>예요." +
+"<span class='ex'>Who / is / she? → <b>Who is she?</b><br>" +
+"Who / are / they? → <b>Who are they?</b><br>" +
+"What / is / it? → <b>What is it?</b></span>" +
+"<span class='my'>배열 문제 요령: <b>의문사를 맨 앞에</b> 놓고 시작하면 절대 안 헷갈려요.<br>" +
+"그 다음 be동사, 그 다음 주어, 마지막에 물음표! 세 칸이면 끝나요.</span>";
+
+TIPS[B1] =
+"이번엔 동작을 물어보는 말이에요. <b>do</b>와 <b>does</b>는 주어가 정해요." +
+"<span class='ex'><b>I · You · We · They</b> → <b>do</b><br>" +
+"<b>He · She · It</b> → <b>does</b></span>" +
+"<span class='ex'>What <b>do</b> you like? (너는 무엇을 좋아하니?)<br>" +
+"What <b>does</b> she have? (그녀는 무엇을 가지고 있니?)<br>" +
+"What <b>does</b> it eat? (그것은 무엇을 먹니?)</span>" +
+"<span class='my'>외우는 법: <b>He · She · It</b> 세 개만 <b>does</b>예요. 나머지는 전부 do!<br>" +
+"'그·그녀·그것' 세 형제만 <b>does</b>를 쓴다고 기억해요.</span>";
+
+TIPS[B2] =
+"주어가 대명사가 아니라 <b>이름이나 사물</b>일 때는 이렇게 바꿔 생각해요." +
+"<span class='ex'>Josh → 한 명이니까 <b>He</b> → <b>does</b><br>" +
+"the girl → 한 명이니까 <b>She</b> → <b>does</b><br>" +
+"Jane → 한 명이니까 <b>She</b> → <b>does</b><br>" +
+"your sister → 한 명이니까 <b>She</b> → <b>does</b></span>" +
+"반대로 <b>-s</b>가 붙어 여럿이면 <b>They</b>로 바꿔서 <b>do</b>!" +
+"<span class='ex'>flower<b>s</b> → <b>They</b> → <b>do</b> (What <b>do</b> flowers need?)<br>" +
+"rabbit<b>s</b> → <b>They</b> → <b>do</b><br>" +
+"the children (아이들, 여럿) → <b>They</b> → <b>do</b></span>" +
+"<span class='my'>주은이가 Unit 09 C 3번에서 <b>Jane</b> 앞에 do를 썼었죠? Jane은 <b>한 명(She)</b>이라 <b>does</b>예요.<br>" +
+"같은 페이지 1번의 <b>he</b>(does), 2번의 <b>you</b>(do), 4번의 <b>they</b>(do)는 <b>전부 정확하게</b> 골랐어요!<br>" +
+"대명사는 완벽했고 <b>사람 이름</b>일 때만 한 번 흔들린 거예요. 이름이 나오면 He·She·They 중 무엇인지 먼저 바꿔 보세요.<br><br>" +
+"주의! <b>children</b>은 -s가 없지만 '아이들'이라는 <b>여럿</b>이에요.<br>" +
+"child(한 명)의 여럿 모양이 children이랍니다. 그래서 <b>do</b>를 써요!</span>";
+
+TIPS[B3] =
+"의문문의 순서는 언제나 똑같아요. 통째로 외워 두면 편해요." +
+"<span class='ex'><b>What + do/does + 주어 + 동사원형 ?</b></span>" +
+"<span class='ex'>What <b>does</b> <b>he</b> <b>want</b>? (그는 무엇을 원하니?)<br>" +
+"What <b>do</b> <b>you</b> <b>study</b>? (너는 무엇을 공부하니?)<br>" +
+"What <b>does</b> <b>Jane</b> <b>study</b>? (Jane은 무엇을 공부하니?)</span>" +
+"<span class='my'>배열 문제 요령: 칸을 네 개로 나눠 놓고 시작해요.<br>" +
+"[What] [does] [he] [want?] — 이렇게 한 칸씩 채우면 순서가 절대 안 꼬여요.<br>" +
+"do/does는 <b>의문사 바로 다음</b>, 주어는 <b>그 다음</b>이에요.</span>";
+
+TIPS[C1] =
+"여기가 이 단원에서 가장 중요한 곳이에요. 아주 재미있는 규칙이랍니다." +
+"<span class='ex'>He like<b>s</b> bread. (그는 빵을 좋아해.) — 혼자 말할 땐 like<b>s</b><br>" +
+"What <b>does</b> he <b>like</b>? — 물어볼 땐 like (s가 사라졌어요!)</span>" +
+"왜 그럴까요? <b>does가 그 -s를 대신 가져갔기 때문</b>이에요. do + s = does!" +
+"<span class='ex'><b>does</b>가 -s를 맡았으니, 뒤에 오는 동사는 <b>원래 모습</b>으로 쉬어요.<br>" +
+"한 문장에 -s를 <b>두 번</b> 쓰지 않아요.</span>" +
+"<span class='my'>기억 문장: <b>does가 s를 가져갔다!</b><br>" +
+"그래서 does 뒤에는 언제나 <b>wear · buy · drink · like · study</b>처럼 깔끔한 모습이에요.<br>" +
+"wears · buys · drinks · likes · studies는 does와 같이 쓰지 않아요.</span>";
+
+TIPS[C2] =
+"틀린 곳을 찾는 문제에서 이 규칙이 자주 나와요. 두 곳만 보면 돼요." +
+"<span class='ex'>① 주어에 맞는 <b>do / does</b>인가?<br>" +
+"② does·do 뒤 동사가 <b>원래 모습</b>인가?</span>" +
+"<span class='ex'>What does he <s>likes</s>? → What does he <b>like</b>? (동사에서 s 빼기)<br>" +
+"What <s>does</s> you see? → What <b>do</b> you see? (You는 do)<br>" +
+"What <s>do</s> she eat? → What <b>does</b> she eat? (She는 does)</span>" +
+"<span class='my'>고쳐 쓰기 문제 순서<br>" +
+"1) 주어를 먼저 찾아요 (he? you? she?)<br>" +
+"2) do인지 does인지 정해요<br>" +
+"3) 뒤 동사에 s가 붙어 있으면 떼어 내요<br>" +
+"이 세 단계면 어떤 문장이든 고칠 수 있어요!</span>";
+
+TIPS[C3] =
+"<b>do</b> 뒤에도 마찬가지로 동사는 원래 모습이에요." +
+"<span class='ex'>What do they <b>practice</b>? (practices 아니에요)<br>" +
+"What do you <b>study</b>? (studies 아니에요)<br>" +
+"What do rabbits <b>eat</b>? (eats 아니에요)</span>" +
+"사실 do 쪽은 원래부터 -s를 붙이지 않으니 더 쉬워요." +
+"<span class='ex'>They practice tennis. → What do they <b>practice</b>?<br>" +
+"두 문장 다 practice 그대로죠? 모양이 바뀌지 않아요.</span>" +
+"<span class='my'>정리하면 이래요.<br>" +
+"do 뒤 → <b>동사원형</b><br>" +
+"does 뒤 → <b>동사원형</b><br>" +
+"즉 <b>do·does 뒤에는 언제나 동사원형</b> 하나만 기억하면 끝이에요!</span>";
+
+TIPS[D1] =
+"'그것은 <b>무엇이니</b>?'처럼 <b>정체</b>를 물을 때는 be동사(is/are)를 써요." +
+"<span class='ex'>What <b>is</b> it? → It <b>is</b> an eraser. (그것은 지우개야)<br>" +
+"Who <b>are</b> they? → They <b>are</b> my brothers.</span>" +
+"이때는 do나 does가 필요 없어요. be동사 하나로 충분하답니다." +
+"<span class='ex'>What <b>is</b> it? (O)<br>" +
+"What <s>does</s> it? (X) — 뒤에 동작이 없으면 does를 쓰지 않아요</span>" +
+"<span class='my'>구분법: 우리말을 보세요.<br>" +
+"'무엇<b>이니</b>?' · '누구<b>니</b>?' → <b>be동사</b> (is / are)<br>" +
+"'무엇을 <b>먹니</b>?' · '무엇을 <b>좋아하니</b>?' → <b>do / does</b><br>" +
+"뒤에 <b>동작</b>이 있으면 do/does예요!</span>";
+
+TIPS[D2] =
+"'무엇을 <b>먹니</b>? 마시니? 원하니? 공부하니?'처럼 <b>동작</b>을 물을 때는 do/does를 써요." +
+"<span class='ex'>What <b>does</b> the cat <b>eat</b>? (그 고양이는 무엇을 먹니?)<br>" +
+"What <b>does</b> your sister <b>study</b>? (네 언니는 무엇을 공부하니?)<br>" +
+"What <b>do</b> you <b>see</b>? (너는 무엇을 보니?)</span>" +
+"<span class='ex'>What <s>is</s> the cat eat? (X) — eat이라는 동작이 있으니 is가 아니라 <b>does</b>!<br>" +
+"→ What <b>does</b> the cat eat? (O)</span>" +
+"<span class='my'>서술형 테스트 1번이 바로 이 문제였어요.<br>" +
+"<b>What is the cat eat?</b> → 주은이가 <b>is</b>가 틀렸다는 것을 <b>정확하게 찾아냈어요!</b><br>" +
+"do로 고쳤는데, the cat은 <b>한 마리(It)</b>라서 <b>does</b>였답니다. 절반은 이미 맞힌 거예요.<br>" +
+"'be동사가 아니라 do·does구나'를 알아낸 게 훨씬 어려운 부분이에요. 정말 잘했어요!<br><br>" +
+"한눈에 구분하는 법<br>" +
+"문장 끝에 <b>동사(eat · study · like · want)</b>가 보이나요?<br>" +
+"보이면 <b>do/does</b>, 안 보이면 <b>be동사</b>! 그 다음 주어를 보고 do인지 does인지 정해요.</span>";
+
+TIPS[D3] =
+"가장 자주 나오는 실수예요. <b>be동사와 do/does는 한 문장에 같이 쓰지 않아요.</b>" +
+"<span class='ex'>What <b>is</b> it? (O) — be동사만<br>" +
+"What <b>does</b> it eat? (O) — does만<br>" +
+"What <s>is does</s> it eat? (X) — 둘 다 쓰면 안 돼요</span>" +
+"둘 중 <b>하나만</b> 고르면 되고, 고르는 기준은 <b>동작이 있는지</b>예요." +
+"<span class='ex'>A: What <b>is</b> it? B: It is my dad. → 어색해요! dad는 <b>사람</b>이라 <b>Who is he?</b>가 자연스러워요.<br>" +
+"A: What <b>do</b> you have? B: I have bread. → 자연스러워요.</span>" +
+"<span class='my'>대화가 어색한 것을 고르는 문제에서는 두 가지를 봐요.<br>" +
+"① 사람인데 What으로 물었나? (→ Who여야 해요)<br>" +
+"② 동작인데 be동사로 물었나? (→ do/does여야 해요)<br>" +
+"이 두 가지만 확인하면 답이 바로 보여요!</span>";
+
+TIPS[E1] =
+"주니어 능률 VOCA Day 03 낱말 중 <b>사람과 장소</b>를 모아 봤어요." +
+"<span class='ex'><b>dancer</b> 춤추는 사람, 무용수 (dance + <b>r</b> = 춤추는 사람)<br>" +
+"<b>teacher</b> 교사, 선생 (teach + <b>er</b> = 가르치는 사람)<br>" +
+"<b>classmate</b> 급우, 반 친구 (class + mate, <b>붙여서</b> 한 낱말!)<br>" +
+"<b>classroom</b> 교실 (class + room, 이것도 <b>붙여서</b>!)</span>" +
+"<span class='ex'><b>city</b> 도시 · <b>house</b> 집, 주택 · <b>beach</b> 해변, 바닷가<br>" +
+"<b>sand</b> 모래 (해변에 있는 것!)</span>" +
+"<span class='my'>주은이가 VOCA 33번에서 <b>class mate</b>라고 띄어 썼었죠? 글자는 하나도 틀리지 않았어요!<br>" +
+"<b>붙여서 classmate</b>로만 쓰면 완성이에요. 아주 아깝게 놓친 거랍니다.<br><br>" +
+"낱말이 만들어지는 규칙을 알면 훨씬 쉬워요.<br>" +
+"동사 + <b>-er / -r</b> = 그 일을 하는 <b>사람</b><br>" +
+"dance→dancer, teach→teacher, sing→singer, play→player<br>" +
+"그리고 class<b>mate</b>, class<b>room</b>은 띄어 쓰지 않고 <b>한 낱말</b>로 붙여 써요!</span>";
+
+TIPS[E2] =
+"Day 03의 <b>모습과 느낌</b>을 나타내는 낱말이에요." +
+"<span class='ex'><b>dirty</b> 더러운 ↔ 깨끗한 clean<br>" +
+"<b>wet</b> 젖은, 축축한 ↔ 마른 dry<br>" +
+"<b>hot</b> 더운, 뜨거운; 매운<br>" +
+"<b>new</b> 새, 새로운 · <b>color</b> 색, 색깔</span>" +
+"<span class='ex'><b>look</b> 보다; (~하게) 보이다<br>" +
+"<b>look like</b> ~처럼 보이다, ~인 것 같다 (뒤에 <b>명사</b>가 와요)<br>" +
+"You <b>look</b> happy. (행복해 보인다 — 뒤에 형용사)<br>" +
+"You <b>look like</b> a dancer. (무용수처럼 보인다 — 뒤에 명사)</span>" +
+"<span class='my'><b>look</b>과 <b>look like</b>는 짝으로 외워요.<br>" +
+"뒤에 오는 말이 <b>형용사</b>면 look, <b>명사</b>면 look like!<br>" +
+"그리고 <b>have fun</b>은 '즐기다, 재미있게 놀다'라는 두 낱말 표현이에요.</span>";
+
+TIPS[E3] =
+"Day 04에서 철자나 뜻이 헷갈리기 쉬운 낱말을 모았어요." +
+"<span class='ex'><b>minute</b> 분; 잠깐 — <b>mi · nu · te</b> 세 덩어리로 끊어서!<br>" +
+"<b>enter</b> 들어가다 · <b>ago</b> ~ 전에, 이전에<br>" +
+"<b>yesterday</b> 어제 · <b>all day (long)</b> 하루 종일</span>" +
+"<span class='ex'><b>eat out</b> 외식하다 (밖에서 eat!)<br>" +
+"<b>act</b> 행동하다; 행동, 행위<br>" +
+"<b>watch</b> 보다; 손목시계 (뜻이 <b>두 개</b>예요)<br>" +
+"<b>study</b> 공부(하다); 연구(하다) · <b>hobby</b> 취미</span>" +
+"<span class='ex'><b>well</b> 잘, 훌륭하게; 건강한 · <b>smart</b> 영리한, 똑똑한<br>" +
+"<b>bad</b> 나쁜, 불쾌한 · <b>late</b> 늦은, 지각한 · <b>body</b> 몸, 신체<br>" +
+"<b>star</b> 별; 스타 · <b>flower</b> 꽃 · <b>all</b> 모든; 모두</span>" +
+"<span class='my'>주은이가 VOCA 35번에서 <b>minnet</b>이라고 썼었죠? 소리는 정확하게 들었어요!<br>" +
+"<b>minute</b>는 소리와 철자가 달라서 어른도 헷갈리는 낱말이랍니다.<br>" +
+"소리는 '미닛'인데 쓸 때는 <b>mi-nu-te</b>! 가운데가 <b>nu</b>, 끝에 <b>e</b>를 꼭 붙여요.<br>" +
+"세 덩어리로 나눠 세 번 쓰면 확실히 외워져요.<br><br>" +
+"그리고 주은이는 VOCA에서 <b>who · dirty · city · dinner · dancer · color · teacher · wet · hobby</b>를<br>" +
+"모두 정확하게 골랐어요. 대부분 다 맞힌 거예요!</span>";
+
+/* ══════════ 문제 30문항 (5영역 · 카드 1장당 2문항) ══════════ */
+var ALL = [
+/* ───────── 1영역 · Who / What 구별 (1~6) ───────── */
+{"src":A1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>A: ( ) is it?<br>B: It is an eraser.</b><span class='ko'>(그것은 무엇이니? / 그것은 지우개야.)</span>","choices":["What","Who","Do","Does"],"answer":"What","exp":"정답은 <b>What</b>!<br>· 대답이 <b>an eraser</b>(지우개)예요. 사람이 아니니까 <b>What</b>(무엇)을 써요.<br>· <b>Who</b>는 정답이 아니에요 — Who는 <b>사람</b>을 물을 때 써요. 지우개는 사람이 아니죠.<br>· <b>Do</b>와 <b>Does</b>는 정답이 아니에요 — 뒤에 eat·like 같은 <b>동작</b>이 없어요. 여기는 <b>is</b>가 있으니 의문사만 넣으면 돼요.<br>· 요령: 보기를 고르기 전에 <b>대답을 먼저</b> 읽어 보세요. 대답에 사람이 있으면 Who, 없으면 What이에요!"},
+{"src":A1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>A: ( ) are they?<br>B: They are my brothers.</b><span class='ko'>(그들은 누구니? / 그들은 나의 형들이야.)</span>","choices":["Who","What","Do","Does"],"answer":"Who","exp":"정답은 <b>Who</b>!<br>· 대답이 <b>my brothers</b>(나의 형들)예요. <b>사람</b>이니까 <b>Who</b>(누구)를 써요.<br>· <b>What</b>은 정답이 아니에요 — What은 사람이 아닌 것을 물을 때 써요. 형은 사람이에요.<br>· <b>Do</b>와 <b>Does</b>는 정답이 아니에요 — 뒤에 동작이 없고 <b>are</b>가 있어요.<br>· 그림 문제에서도 똑같아요. 사진에 <b>사람</b>이 있으면 Who, <b>동물이나 물건</b>이 있으면 What이에요!"},
+{"src":A2,"q":"질문에 알맞은 대답을 고르세요.<br><b class='en'>What is it?</b><span class='ko'>(그것은 무엇이니?)</span>","choices":["It is a pencil case.","They are my brothers.","He drinks milk.","She likes dogs."],"answer":"It is a pencil case.","exp":"정답은 <b class='en'>It is a pencil case.</b><br>· 질문이 <b>What is <u>it</u>?</b>이니까 대답도 <b>It is ~</b>로 시작해야 자연스러워요.<br>· <b>They are my brothers.</b>는 정답이 아니에요 — 이건 <b>Who are they?</b>에 어울리는 대답이에요.<br>· <b>He drinks milk.</b>는 정답이 아니에요 — 이건 <b>What does he drink?</b>의 대답이에요.<br>· <b>She likes dogs.</b>는 정답이 아니에요 — 이건 <b>What does she like?</b>의 대답이에요.<br>· 짝 맞추기 요령: 질문의 <b>주어</b>(it · they · he · she)와 대답의 <b>주어</b>가 같은 것을 찾으면 돼요!"},
+{"src":A2,"q":"질문에 알맞은 대답을 고르세요.<br><b class='en'>Who are they?</b><span class='ko'>(그들은 누구니?)</span>","choices":["They are my brothers.","It is a pencil case.","He drinks milk.","I study science."],"answer":"They are my brothers.","exp":"정답은 <b class='en'>They are my brothers.</b><br>· 질문이 <b>Who are <u>they</u>?</b>이니까 대답도 <b>They are ~</b>로 시작해요. 그리고 Who로 물었으니 대답에 <b>사람</b>이 나와야 해요.<br>· <b>It is a pencil case.</b>는 정답이 아니에요 — 주어가 It이고 필통은 사람이 아니에요. 이건 What is it?의 대답이에요.<br>· <b>He drinks milk.</b>는 정답이 아니에요 — 주어가 He예요.<br>· <b>I study science.</b>는 정답이 아니에요 — 이건 <b>What do you study?</b>의 대답이에요.<br>· Who로 물으면 대답에 사람(brothers · scientists · my dad · teacher)이 나온다는 걸 기억해요!"},
+{"src":A3,"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그들은 누구니?</b>","tiles":["Who","are","they?"],"answer":"Who are they?","exp":"정답은 <b class='en'>Who are they?</b><br>· 순서: <b>의문사(Who) + be동사(are) + 주어(they)</b> + 물음표<br>· they는 <b>여럿</b>이라서 be동사는 <b>are</b>예요.<br>· <b>의문사를 맨 앞에</b> 놓고 시작하면 순서가 절대 안 꼬여요.<br>· 참고: 한 명이면 <b>Who is he?</b> / <b>Who is she?</b>가 돼요."},
+{"src":A3,"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그녀는 누구니?</b>","tiles":["Who","is","she?"],"answer":"Who is she?","exp":"정답은 <b class='en'>Who is she?</b><br>· 순서: <b>Who + is + she?</b><br>· she는 <b>한 명</b>이라서 be동사는 <b>is</b>예요. (they였다면 are)<br>· '누구니?'는 정체를 묻는 말이라 <b>be동사</b>를 써요. does는 쓰지 않아요.<br>· 1영역 끝! <b>사람이면 Who, 아니면 What</b> — 이 한 줄이 핵심이에요."},
+/* ───────── 2영역 · do / does 고르기 (7~12) ───────── */
+{"src":B1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) you like?</b><span class='ko'>(너는 무엇을 좋아하니?)</span>","choices":["do","does","is","are"],"answer":"do","exp":"정답은 <b>do</b>!<br>· 주어가 <b>you</b>예요. I·You·We·They는 <b>do</b>를 써요.<br>· <b>does</b>는 정답이 아니에요 — does는 <b>He·She·It</b> 세 형제만 써요. you는 여기에 들어가지 않아요.<br>· <b>is</b>와 <b>are</b>는 정답이 아니에요 — 뒤에 <b>like</b>라는 동작이 있으니 be동사가 아니라 do/does를 써요.<br>· 외우는 법: <b>He·She·It만 does</b>, 나머지는 전부 do!"},
+{"src":B1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) she have?</b><span class='ko'>(그녀는 무엇을 가지고 있니?)</span>","choices":["does","do","is","are"],"answer":"does","exp":"정답은 <b>does</b>!<br>· 주어가 <b>she</b>예요. He·She·It은 <b>does</b>를 써요.<br>· <b>do</b>는 정답이 아니에요 — do는 I·You·We·They가 쓰는 말이에요.<br>· <b>is</b>와 <b>are</b>는 정답이 아니에요 — 뒤에 <b>have</b>라는 동작이 있어요. 동작이 있으면 do/does예요.<br>· 그리고 does 뒤의 동사가 <b>have</b>(원래 모습)인 것도 봐 두세요. has가 아니에요! does가 s를 가져갔거든요."},
+{"src":B2,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) flowers need?</b><span class='ko'>(꽃들은 무엇을 필요로 하니?)</span>","choices":["do","does","is","are"],"answer":"do","exp":"정답은 <b>do</b>!<br>· <b>flowers</b>에 <b>-s</b>가 붙어 있죠? 여럿이라는 신호예요. 여럿은 <b>They</b>로 바꿔 생각하면 <b>do</b>!<br>· <b>does</b>는 정답이 아니에요 — a flower(꽃 한 송이)였다면 does가 맞아요. -s 하나로 답이 바뀌어요.<br>· <b>is</b>와 <b>are</b>는 정답이 아니에요 — 뒤에 <b>need</b>라는 동작이 있어요.<br>· 요령: 주어가 이름이나 사물이면 <b>He·She·It·They 중 무엇으로 바꿀 수 있는지</b> 생각해 보세요!"},
+{"src":B2,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) Josh drink?</b><span class='ko'>(Josh는 무엇을 마시니?)</span>","choices":["does","do","is","are"],"answer":"does","exp":"정답은 <b>does</b>!<br>· <b>Josh</b>는 사람 이름 <b>한 명</b>이에요. <b>He</b>로 바꿀 수 있으니까 <b>does</b>!<br>· <b>do</b>는 정답이 아니에요 — do는 여럿이거나 I·You일 때 써요.<br>· <b>is</b>와 <b>are</b>는 정답이 아니에요 — 뒤에 <b>drink</b>라는 동작이 있어요.<br>· 같은 방법으로: <b>the girl</b> → She → does / <b>Jane</b> → She → does / <b>your sister</b> → She → does<br>· 이름이 나오면 <b>He인지 She인지 They인지</b> 먼저 바꿔 보세요!"},
+{"src":B3,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) the children want?</b><span class='ko'>(그 어린이들은 무엇을 원하니?)</span>","choices":["do","does","is","are"],"answer":"do","exp":"정답은 <b>do</b>!<br>· <b>children</b>은 '어린이<b>들</b>'이라는 뜻이에요. <b>They</b>로 바꿀 수 있으니 <b>do</b>!<br>· <b>does</b>는 정답이 아니에요 — child(어린이 한 명)였다면 does가 맞아요.<br>· <b>is</b>와 <b>are</b>는 정답이 아니에요 — 뒤에 <b>want</b>라는 동작이 있어요.<br>· 조심할 점: children은 <b>-s가 없는데도 여럿</b>이에요! child의 여럿 모양이 children이랍니다. (man→men, woman→women도 마찬가지예요)"},
+{"src":B3,"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그는 무엇을 원하니?</b>","tiles":["What","does","he","want?"],"answer":"What does he want?","exp":"정답은 <b class='en'>What does he want?</b><br>· 순서: <b>What + does + he + want?</b><br>· 통째로 외워요 → <b>What + do/does + 주어 + 동사원형 ?</b><br>· he는 He·She·It 세 형제라서 <b>does</b>예요.<br>· 마지막 동사는 <b>want</b>(원래 모습)! wants가 아니에요. does가 이미 s를 가져갔거든요.<br>· 2영역 끝! <b>He·She·It만 does</b>, 나머지는 do예요."},
+/* ───────── 3영역 · do·does 뒤에는 동사원형 (13~18) ───────── */
+{"src":C1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What does he ( )?</b><span class='ko'>(그는 무엇을 입니?)</span>","choices":["wear","wears","wearing","is wear"],"answer":"wear","exp":"정답은 <b>wear</b>!<br>· 앞에 <b>does</b>가 있죠? does가 이미 <b>-s를 가져갔기</b> 때문에 뒤 동사는 <b>원래 모습</b>이에요.<br>· <b>wears</b>는 정답이 아니에요 — 한 문장에 -s를 두 번 쓰지 않아요. does에 이미 s가 들어 있어요! (do + s = does)<br>· <b>wearing</b>은 정답이 아니에요 — -ing는 '~하고 있다'라는 다른 모양이에요.<br>· <b>is wear</b>는 정답이 아니에요 — does와 be동사를 같이 쓰지 않아요.<br>· 기억 문장: <b>does가 s를 가져갔다!</b>"},
+{"src":C1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What does the girl ( )?</b><span class='ko'>(그 소녀는 무엇을 사니?)</span>","choices":["buy","buys","buying","is buy"],"answer":"buy","exp":"정답은 <b>buy</b>!<br>· <b>does</b> 뒤에는 언제나 <b>동사원형</b>이에요.<br>· <b>buys</b>는 정답이 아니에요 — 혼자 말할 때는 'The girl buy<b>s</b> a book.'처럼 s를 붙이지만, <b>does</b>가 앞에 오면 s를 떼어 내요.<br>· <b>buying</b>은 정답이 아니에요 — -ing 모양이에요.<br>· <b>is buy</b>는 정답이 아니에요 — does와 be동사는 같이 쓰지 않아요.<br>· 비교해 보세요: The girl buy<b>s</b> milk. → What <b>does</b> the girl <b>buy</b>? — s가 does로 옮겨 갔죠?"},
+{"src":C2,"q":"밑줄 친 부분을 바르게 고친 것은?<br><b class='en'>What does he <u>likes</u>?</b><span class='ko'>(그는 무엇을 좋아하니?)</span>","choices":["like","liked","liking","is like"],"answer":"like","exp":"정답은 <b>like</b>!<br>· 앞에 <b>does</b>가 있으니 뒤 동사는 <b>원래 모습</b>인 like로 고쳐요.<br>· <b>liked</b>는 정답이 아니에요 — -ed는 지나간 일을 말할 때 쓰는 모양이에요.<br>· <b>liking</b>은 정답이 아니에요 — -ing 모양이에요.<br>· <b>is like</b>는 정답이 아니에요 — does가 이미 있으니 be동사를 또 넣지 않아요.<br>· 고쳐 쓰기 3단계: ① 주어 찾기(he) ② do/does 정하기(does) ③ 뒤 동사에서 <b>s 떼기</b>(likes → like)!"},
+{"src":C2,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What does Josh ( )?</b><span class='ko'>(Josh는 무엇을 마시니?)</span>","choices":["drink","drinks","drinking","is drink"],"answer":"drink","exp":"정답은 <b>drink</b>!<br>· Josh는 한 명이라 <b>does</b>를 쓰고, 그러면 뒤 동사는 <b>drink</b>(원래 모습)예요.<br>· <b>drinks</b>는 정답이 아니에요 — 대답할 때는 'He drink<b>s</b> milk.'라고 s를 붙이지만, 물어볼 때 does가 앞에 있으면 s를 빼요.<br>· <b>drinking</b>과 <b>is drink</b>도 정답이 아니에요 — 각각 -ing 모양이고, does와 be동사를 겹쳐 쓴 모양이에요.<br>· 질문과 대답을 나란히 놓고 보면 확실해요.<br>Q: What <b>does</b> Josh <b>drink</b>? / A: He <b>drinks</b> milk."},
+{"src":C3,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What do they ( )?</b><span class='ko'>(그들은 무엇을 연습하니?)</span>","choices":["practice","practices","practicing","are practice"],"answer":"practice","exp":"정답은 <b>practice</b>!<br>· <b>do</b> 뒤에도 동사는 <b>원래 모습</b>이에요.<br>· <b>practices</b>는 정답이 아니에요 — they는 여럿이라 원래부터 -s를 붙이지 않아요. (They practice tennis.)<br>· <b>practicing</b>은 정답이 아니에요 — -ing 모양이에요.<br>· <b>are practice</b>는 정답이 아니에요 — do와 be동사를 같이 쓰지 않아요.<br>· 정리: <b>do 뒤에도, does 뒤에도 언제나 동사원형!</b> 하나만 기억하면 돼요."},
+{"src":C3,"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>Jane은 무엇을 공부하니?</b>","tiles":["What","does","Jane","study?"],"answer":"What does Jane study?","exp":"정답은 <b class='en'>What does Jane study?</b><br>· 순서: <b>What + does + Jane + study?</b><br>· Jane은 한 명(She)이라서 <b>does</b>예요.<br>· 마지막 동사는 <b>study</b>! studies가 아니에요. does가 s를 가져갔으니까요.<br>· 대답은 이렇게 돼요 → <b>She studies English.</b> (대답에서는 s가 살아나요!)<br>· 3영역 끝! <b>do·does 뒤에는 동사원형</b> — 이 단원에서 가장 중요한 규칙이에요."},
+/* ───────── 4영역 · be동사 의문문 vs do/does 의문문 (19~24) ───────── */
+{"src":D1,"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>A: What ( ) it?<br>B: It is an eraser.</b><span class='ko'>(그것은 무엇이니? / 그것은 지우개야.)</span>","choices":["is","does","do","are"],"answer":"is","exp":"정답은 <b>is</b>!<br>· '무엇<b>이니</b>?'는 <b>정체</b>를 묻는 말이라 be동사를 써요. it은 하나니까 <b>is</b>!<br>· <b>does</b>는 정답이 아니에요 — 뒤에 eat·like 같은 <b>동작</b>이 없어요. 동작이 없으면 does를 쓰지 않아요.<br>· <b>do</b>도 같은 이유로 정답이 아니에요.<br>· <b>are</b>는 정답이 아니에요 — it은 하나라서 is예요. they였다면 are가 맞아요.<br>· 구분법: 우리말이 '무엇<b>이니</b>?'면 be동사, '무엇을 <b>~하니</b>?'면 do/does예요!"},
+{"src":D1,"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그것은 무엇이니?</b>","tiles":["What","is","it?"],"answer":"What is it?","exp":"정답은 <b class='en'>What is it?</b><br>· 순서: <b>What + is + it?</b> 세 낱말이면 끝이에요.<br>· '무엇이니?'는 정체를 묻는 말이라 <b>be동사(is)</b>를 써요. does는 넣지 않아요.<br>· 대답은 <b>It is an eraser.</b>처럼 <b>It is ~</b>로 해요.<br>· 비교해 두세요.<br>What <b>is</b> it? (그것은 무엇이니?) ↔ What <b>does</b> it eat? (그것은 무엇을 먹니?)"},
+{"src":D2,"q":"밑줄 친 부분을 바르게 고친 것은?<br><b class='en'>What <u>is</u> the cat eat?</b><span class='ko'>(그 고양이는 무엇을 먹니?)</span>","choices":["does","do","are","is not"],"answer":"does","exp":"정답은 <b>does</b>!<br>· 문장 끝에 <b>eat</b>이라는 <b>동작</b>이 있죠? 동작이 있으면 be동사가 아니라 <b>do/does</b>를 써요.<br>· the cat은 <b>한 마리</b>(It)니까 <b>does</b>예요. → What <b>does</b> the cat eat?<br>· <b>do</b>는 정답이 아니에요 — 고양이 한 마리는 It이라서 does예요. cats였다면 do가 맞아요.<br>· <b>are</b>는 정답이 아니에요 — 여전히 be동사이고, 게다가 the cat은 하나예요.<br>· <b>is not</b>은 정답이 아니에요 — 부정이 아니라 <b>묻는 문장</b>이에요.<br>· 확인법: 문장 끝에 <b>동사</b>가 보이면 무조건 do/does!"},
+{"src":D2,"q":"빈칸에 들어갈 말로 알맞은 것은?<br><b class='en'>A: ( ) your sister study?<br>B: She studies English.</b><span class='ko'>(네 언니는 무엇을 공부하니? / 그녀는 영어를 공부해.)</span>","choices":["What does","What do","What is","Who does"],"answer":"What does","exp":"정답은 <b class='en'>What does</b>!<br>· 대답이 '영어를 공부해'니까 <b>무엇</b>을 묻는 <b>What</b>이 맞고, your sister는 한 명(She)이라 <b>does</b>예요.<br>· <b>What do</b>는 정답이 아니에요 — your sister는 She라서 does를 써요.<br>· <b>What is</b>는 정답이 아니에요 — 뒤에 <b>study</b>라는 동작이 있어서 be동사를 쓰지 않아요.<br>· <b>Who does</b>는 정답이 아니에요 — Who는 <b>사람</b>을 물을 때예요. 여기서는 '무엇을 공부하는지' 과목을 묻고 있어요.<br>· 대답 <b>She studies</b>에서 s가 보이죠? 질문에서는 그 s가 <b>does</b>로 옮겨 간답니다."},
+{"src":D3,"q":"다음 중 대화가 <b>어색한</b> 것을 고르세요.","choices":["A: What is it?  B: It is my dad.","A: Who are they?  B: They are scientists.","A: What do you have?  B: I have bread.","A: What does he eat?  B: He eats rice."],"answer":"A: What is it?  B: It is my dad.","exp":"정답(어색한 것)은 <b class='en'>A: What is it? B: It is my dad.</b>예요.<br>· <b>my dad</b>는 <b>사람</b>이에요. 사람을 물을 때는 What이 아니라 <b>Who</b>를 써요. → <b>Who is he?</b> B: <b>He is my dad.</b>가 자연스러워요.<br>· <b>Who are they? / They are scientists.</b>는 자연스러워요 — 과학자는 사람이니까 Who가 맞아요.<br>· <b>What do you have? / I have bread.</b>는 자연스러워요 — you니까 do, 대답도 잘 맞아요.<br>· <b>What does he eat? / He eats rice.</b>는 자연스러워요 — he니까 does, 대답에서는 eat<b>s</b>로 s가 살아났죠.<br>· 어색한 대화 찾는 요령: ① 사람인데 What으로 물었나? ② 동작인데 be동사로 물었나? 이 두 가지만 확인해요!"},
+{"src":D3,"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그 고양이는 무엇을 먹니?</b>","tiles":["What","does","the cat","eat?"],"answer":"What does the cat eat?","exp":"정답은 <b class='en'>What does the cat eat?</b><br>· 순서: <b>What + does + the cat + eat?</b><br>· the cat은 한 마리(It)라서 <b>does</b>예요.<br>· 마지막 동사는 <b>eat</b>! eats가 아니에요.<br>· <b>is</b>는 넣지 않아요. does와 be동사를 한 문장에 같이 쓰지 않거든요.<br>· 4영역 끝! <b>동작이 있으면 do/does, 없으면 be동사</b> — 이것만 구분하면 돼요."},
+/* ───────── 5영역 · VOCA Day 03-04 (25~30) ───────── */
+{"src":E1,"q":"낱말의 뜻으로 알맞은 것을 고르세요.<br><b class='en'>dancer</b>","choices":["춤추는 사람, 무용수","공부(하다); 연구(하다)","집, 주택","저녁 (식사)"],"answer":"춤추는 사람, 무용수","exp":"정답은 <b>춤추는 사람, 무용수</b>!<br>· <b>dance</b>(춤추다) + <b>-r</b> = 춤추는 <b>사람</b>이에요.<br>· <b>공부(하다); 연구(하다)</b>는 <b>study</b>의 뜻이에요.<br>· <b>집, 주택</b>은 <b>house</b>예요.<br>· <b>저녁 (식사)</b>는 <b>dinner</b>예요.<br>· 낱말 만드는 규칙: 동사 + <b>-er / -r</b> = 그 일을 하는 사람!<br>teach → teach<b>er</b>(교사), sing → sing<b>er</b>(가수), play → play<b>er</b>(선수)"},
+{"src":E1,"q":"'급우, 반 친구'를 뜻하는 낱말을 고르세요.","choices":["classmate","classroom","class mate","classmet"],"answer":"classmate","exp":"정답은 <b class='en'>classmate</b>!<br>· <b>class</b>(반) + <b>mate</b>(친구)를 <b>붙여서</b> 한 낱말로 써요.<br>· <b>classroom</b>은 정답이 아니에요 — class + room = <b>교실</b>이에요. 뒷부분이 room이면 '방', mate면 '친구'랍니다.<br>· <b>class mate</b>는 정답이 아니에요 — 띄어 쓰면 안 되고 <b>붙여서</b> 한 낱말로 써요.<br>· <b>classmet</b>은 정답이 아니에요 — 끝은 <b>mate</b>예요.<br>· classmate와 classroom 둘 다 <b>붙여 쓰는 낱말</b>이라는 걸 같이 기억해요!"},
+{"src":E2,"q":"'젖은, 축축한'을 뜻하는 낱말을 고르세요.","choices":["wet","hot","who","act"],"answer":"wet","exp":"정답은 <b class='en'>wet</b>!<br>· <b>wet</b> = 젖은, 축축한 (반대말은 dry '마른')<br>· <b>hot</b>은 '더운, 뜨거운; 매운'이에요.<br>· <b>who</b>는 '누구'라는 의문사예요.<br>· <b>act</b>는 '행동하다; 행동, 행위'예요.<br>· 함께 외워요 — 느낌을 나타내는 낱말들<br><b>dirty</b> 더러운 · <b>wet</b> 젖은 · <b>hot</b> 더운 · <b>new</b> 새로운 · <b>bad</b> 나쁜 · <b>smart</b> 똑똑한"},
+{"src":E2,"q":"<b class='en'>look like</b>의 뜻으로 알맞은 것을 고르세요.","choices":["~처럼 보이다, ~인 것 같다","좋아하다","하루 종일","외식하다"],"answer":"~처럼 보이다, ~인 것 같다","exp":"정답은 <b>~처럼 보이다, ~인 것 같다</b>!<br>· <b>look</b>(보이다) + <b>like</b>(~처럼) = ~처럼 보이다.<br>· <b>좋아하다</b>는 <b>like</b> 혼자 있을 때의 뜻이에요. 앞에 look이 붙으면 뜻이 달라져요!<br>· <b>하루 종일</b>은 <b>all day (long)</b>이에요.<br>· <b>외식하다</b>는 <b>eat out</b>이에요.<br>· 짝으로 외워요<br>look + <b>형용사</b> → You <b>look</b> happy. (행복해 보인다)<br>look like + <b>명사</b> → You <b>look like</b> a dancer. (무용수처럼 보인다)"},
+{"src":E3,"q":"'(시간의 단위) 분; 잠깐'을 뜻하는 낱말의 <b>철자</b>로 알맞은 것을 고르세요.","choices":["minute","minnet","minit","minutte"],"answer":"minute","exp":"정답은 <b class='en'>minute</b>!<br>· 소리는 '미닛'이지만 쓸 때는 <b>mi · nu · te</b> 세 덩어리예요. 끝에 <b>e</b>를 꼭 붙여요!<br>· <b>minnet</b>은 정답이 아니에요 — n을 두 번 쓰지 않고, 끝은 <b>te</b>예요.<br>· <b>minit</b>은 정답이 아니에요 — 소리 나는 대로 쓴 모양이에요. 가운데는 <b>nu</b>랍니다.<br>· <b>minutte</b>은 정답이 아니에요 — t는 하나예요.<br>· 소리와 철자가 다른 낱말이라 어려워요. <b>mi-nu-te</b>를 세 번 소리 내며 써 보면 확실해져요!"},
+{"src":E3,"q":"<b class='en'>eat out</b>의 뜻으로 알맞은 것을 고르세요.","choices":["외식하다","들어가다","~ 전에, 이전에","즐기다, 재미있게 놀다"],"answer":"외식하다","exp":"정답은 <b>외식하다</b>!<br>· <b>eat</b>(먹다) + <b>out</b>(밖에서) = 밖에서 먹다 → <b>외식하다</b>. 그림이 그려지죠?<br>· <b>들어가다</b>는 <b>enter</b>예요.<br>· <b>~ 전에, 이전에</b>는 <b>ago</b>예요.<br>· <b>즐기다, 재미있게 놀다</b>는 <b>have fun</b>이에요.<br>· 두 낱말이 모여 새 뜻이 되는 표현들이에요.<br><b>eat out</b> 외식하다 · <b>look like</b> ~처럼 보이다 · <b>have fun</b> 즐기다 · <b>all day (long)</b> 하루 종일<br>· 5영역 끝! 30문항 모두 수고했어요."}
+];
+
+/* ══════════ 오답 클리닉 문제 (문항별 1:1 대응) ══════════ */
+var CLINIC = [
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>A: ( ) is it?<br>B: It is a pencil case.</b><span class='ko'>(그것은 무엇이니? / 그것은 필통이야.)</span>","choices":["What","Who","Do","Does"],"answer":"What","exp":"정답은 <b>What</b>! 대답이 <b>a pencil case</b>(필통)라서 사람이 아니에요.<br>· Who는 <b>사람</b>을 물을 때만 써요.<br>· Do·Does는 뒤에 <b>동작</b>이 있을 때 써요. 여기는 is가 있어요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>A: ( ) are they?<br>B: They are scientists.</b><span class='ko'>(그들은 누구니? / 그들은 과학자야.)</span>","choices":["Who","What","Do","Does"],"answer":"Who","exp":"정답은 <b>Who</b>! 대답이 <b>scientists</b>(과학자)라서 <b>사람</b>이에요.<br>· What은 사람이 아닌 것을 물을 때 써요.<br>· Do·Does는 뒤에 동작이 있을 때 써요. 여기는 are가 있어요."},
+{"q":"질문에 알맞은 대답을 고르세요.<br><b class='en'>What does he drink?</b><span class='ko'>(그는 무엇을 마시니?)</span>","choices":["He drinks milk.","It is a pencil case.","They are my brothers.","She likes dogs."],"answer":"He drinks milk.","exp":"정답은 <b class='en'>He drinks milk.</b><br>· 질문의 주어가 <b>he</b>니까 대답도 <b>He</b>로 시작해요.<br>· It·They·She로 시작하는 것은 각각 What is it? / Who are they? / What does she like?의 대답이에요.<br>· 대답에서는 drink<b>s</b>로 s가 살아난 것도 봐 두세요!"},
+{"q":"질문에 알맞은 대답을 고르세요.<br><b class='en'>Who is he?</b><span class='ko'>(그는 누구니?)</span>","choices":["He is my dad.","It is an eraser.","They eat carrots.","I study science."],"answer":"He is my dad.","exp":"정답은 <b class='en'>He is my dad.</b><br>· Who로 물었으니 대답에 <b>사람</b>(my dad)이 나와요. 주어도 he ↔ He로 맞아요.<br>· It is an eraser.는 What is it?의 대답이에요.<br>· They eat carrots.는 What do rabbits eat?의 대답이에요.<br>· I study science.는 What do you study?의 대답이에요."},
+{"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그들은 누구니?</b>","tiles":["Who","are","they?"],"answer":"Who are they?","exp":"정답은 <b class='en'>Who are they?</b><br>· <b>의문사 + be동사 + 주어?</b> 순서예요.<br>· they는 여럿이라 <b>are</b>! 의문사를 맨 앞에 놓고 시작하면 쉬워요."},
+{"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그는 누구니?</b>","tiles":["Who","is","he?"],"answer":"Who is he?","exp":"정답은 <b class='en'>Who is he?</b><br>· he는 한 명이라 <b>is</b>예요. (they였다면 are)<br>· '누구니?'는 정체를 묻는 말이라 be동사를 써요. does는 넣지 않아요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) you see?</b><span class='ko'>(너는 무엇을 보니?)</span>","choices":["do","does","is","are"],"answer":"do","exp":"정답은 <b>do</b>! 주어가 <b>you</b>예요.<br>· does는 <b>He·She·It</b> 세 형제만 써요.<br>· 뒤에 <b>see</b>라는 동작이 있으니 be동사(is/are)는 쓰지 않아요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) she eat?</b><span class='ko'>(그녀는 무엇을 먹니?)</span>","choices":["does","do","is","are"],"answer":"does","exp":"정답은 <b>does</b>! 주어가 <b>she</b>라서 does예요.<br>· do는 I·You·We·They가 써요.<br>· 뒤에 <b>eat</b>이라는 동작이 있으니 be동사는 쓰지 않아요.<br>· does 뒤 동사가 eat(원래 모습)인 것도 확인해요!"},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) rabbits eat?</b><span class='ko'>(토끼들은 무엇을 먹니?)</span>","choices":["do","does","is","are"],"answer":"do","exp":"정답은 <b>do</b>! <b>rabbits</b>에 -s가 붙어 여럿이에요. They로 바꿔 생각하면 do!<br>· a rabbit(토끼 한 마리)이었다면 does가 맞아요.<br>· 뒤에 eat이라는 동작이 있으니 be동사는 쓰지 않아요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) Minho drink?</b><span class='ko'>(민호는 무엇을 마시니?)</span>","choices":["does","do","is","are"],"answer":"does","exp":"정답은 <b>does</b>! <b>Minho</b>는 한 명이라 <b>He</b>로 바꿀 수 있어요.<br>· 이름이 나오면 He·She·They 중 무엇으로 바꿀 수 있는지 먼저 생각해요.<br>· 뒤에 drink라는 동작이 있으니 be동사는 쓰지 않아요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What ( ) the children want?</b><span class='ko'>(그 어린이들은 무엇을 원하니?)</span>","choices":["do","does","is","are"],"answer":"do","exp":"정답은 <b>do</b>! <b>children</b>은 '어린이들'이라 <b>They</b>예요.<br>· -s가 없어도 여럿인 낱말이에요. child의 여럿 모양이 children이랍니다.<br>· 뒤에 want라는 동작이 있으니 be동사는 쓰지 않아요."},
+{"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>너는 무엇을 공부하니?</b>","tiles":["What","do","you","study?"],"answer":"What do you study?","exp":"정답은 <b class='en'>What do you study?</b><br>· <b>What + do/does + 주어 + 동사원형?</b> 순서예요.<br>· you는 <b>do</b>! 마지막 동사는 study(원래 모습)예요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What does she ( )?</b><span class='ko'>(그녀는 무엇을 가지고 있니?)</span>","choices":["have","has","having","is have"],"answer":"have","exp":"정답은 <b>have</b>! 앞에 <b>does</b>가 있으니 뒤 동사는 원래 모습이에요.<br>· has는 혼자 말할 때(She <b>has</b> a book.) 쓰는 모양이에요. does가 오면 <b>have</b>로 돌아가요.<br>· having은 -ing 모양, is have는 does와 be동사를 겹쳐 쓴 모양이라 안 돼요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What does it ( )?</b><span class='ko'>(그것은 무엇을 먹니?)</span>","choices":["eat","eats","eating","is eat"],"answer":"eat","exp":"정답은 <b>eat</b>! <b>does</b>가 이미 s를 가져갔으니 뒤 동사는 <b>eat</b>이에요.<br>· eats는 대답할 때 쓰는 모양이에요. (It <b>eats</b> carrots.)<br>· eating은 -ing 모양, is eat은 does와 be동사를 겹쳐 쓴 모양이에요."},
+{"q":"밑줄 친 부분을 바르게 고친 것은?<br><b class='en'>What does the girl <u>buys</u>?</b><span class='ko'>(그 소녀는 무엇을 사니?)</span>","choices":["buy","bought","buying","is buy"],"answer":"buy","exp":"정답은 <b>buy</b>! does 뒤에서는 동사의 <b>s를 떼어</b>요.<br>· bought는 지나간 일을 말하는 모양이에요.<br>· buying은 -ing 모양, is buy는 does와 be동사를 같이 쓴 모양이에요.<br>· 고쳐 쓰기 3단계: 주어 찾기 → do/does 정하기 → 뒤 동사 s 떼기!"},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What does he ( )?</b><span class='ko'>(그는 무엇을 좋아하니?)</span>","choices":["like","likes","liking","is like"],"answer":"like","exp":"정답은 <b>like</b>! does 뒤에는 언제나 동사원형이에요.<br>· likes는 대답할 때 써요. (He <b>likes</b> bread.)<br>· 질문과 대답을 나란히 보면 확실해요 → Q: What <b>does</b> he <b>like</b>? / A: He <b>likes</b> bread."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>What do they ( )?</b><span class='ko'>(그들은 무엇을 공부하니?)</span>","choices":["study","studies","studying","are study"],"answer":"study","exp":"정답은 <b>study</b>! <b>do</b> 뒤에도 동사원형이에요.<br>· studies는 She studies English.처럼 한 명일 때 쓰는 모양이에요.<br>· studying은 -ing 모양, are study는 do와 be동사를 같이 쓴 모양이에요."},
+{"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그는 무엇을 사니?</b>","tiles":["What","does","he","buy?"],"answer":"What does he buy?","exp":"정답은 <b class='en'>What does he buy?</b><br>· <b>What + does + he + buy?</b><br>· he는 does, 마지막 동사는 buy(원래 모습)! buys가 아니에요."},
+{"q":"빈칸에 알맞은 말을 고르세요.<br><b class='en'>A: What ( ) it?<br>B: It is a big kite.</b><span class='ko'>(그것은 무엇이니? / 그것은 큰 연이야.)</span>","choices":["is","does","do","are"],"answer":"is","exp":"정답은 <b>is</b>! '무엇<b>이니</b>?'는 정체를 묻는 말이라 be동사예요.<br>· 뒤에 동작이 없으니 does·do는 쓰지 않아요.<br>· it은 하나라서 are가 아니라 is예요."},
+{"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그것은 무엇이니?</b>","tiles":["What","is","it?"],"answer":"What is it?","exp":"정답은 <b class='en'>What is it?</b><br>· 세 낱말이면 끝나요. 정체를 묻는 말이라 <b>be동사</b>를 써요.<br>· 비교: What <b>is</b> it? (무엇이니?) ↔ What <b>does</b> it eat? (무엇을 먹니?)"},
+{"q":"밑줄 친 부분을 바르게 고친 것은?<br><b class='en'>What <u>is</u> he want?</b><span class='ko'>(그는 무엇을 원하니?)</span>","choices":["does","do","are","is not"],"answer":"does","exp":"정답은 <b>does</b>! 문장 끝에 <b>want</b>라는 동작이 있어요.<br>· 동작이 있으면 be동사가 아니라 do/does예요.<br>· he는 He·She·It 세 형제라 <b>does</b>! (they였다면 do)<br>· 확인법: 문장 끝에 동사가 보이면 무조건 do/does예요."},
+{"q":"빈칸에 들어갈 말로 알맞은 것은?<br><b class='en'>A: ( ) Jane study?<br>B: She studies math.</b><span class='ko'>(Jane은 무엇을 공부하니? / 그녀는 수학을 공부해.)</span>","choices":["What does","What do","What is","Who does"],"answer":"What does","exp":"정답은 <b class='en'>What does</b>!<br>· 과목(무엇)을 물으니 <b>What</b>, Jane은 한 명(She)이라 <b>does</b>예요.<br>· What do는 여럿일 때, What is는 동작이 없을 때 써요.<br>· Who does는 사람을 물을 때예요. 여기서는 과목을 묻고 있어요."},
+{"q":"다음 중 대화가 <b>어색한</b> 것을 고르세요.","choices":["A: What are they?  B: They are my brothers.","A: What is it?  B: It is an eraser.","A: Who is he?  B: He is my dad.","A: What do you study?  B: I study science."],"answer":"A: What are they?  B: They are my brothers.","exp":"정답(어색한 것)은 <b class='en'>A: What are they? B: They are my brothers.</b>예요.<br>· <b>my brothers</b>는 <b>사람</b>이니까 What이 아니라 <b>Who</b>로 물어야 자연스러워요. → <b>Who are they?</b><br>· What is it? / It is an eraser. — 지우개는 사람이 아니라 What이 맞아요.<br>· Who is he? / He is my dad. — 아빠는 사람이라 Who가 맞아요.<br>· What do you study? / I study science. — you니까 do, 대답도 잘 맞아요."},
+{"t":"ord","q":"낱말을 순서대로 눌러 문장을 완성하세요.<br><b>그들은 방과 후에 무엇을 하니?</b>","tiles":["What","do","they","do","after school?"],"answer":"What do they do after school?","exp":"정답은 <b class='en'>What do they do after school?</b><br>· <b>do</b>가 두 번 나와요! 앞의 do는 <b>묻는 do</b>, 뒤의 do는 '<b>하다</b>'라는 동사예요.<br>· they는 여럿이라 앞의 do를 쓰고, 뒤 동사는 원래 모습 do예요.<br>· 시간을 나타내는 <b>after school</b>은 문장 맨 뒤에 놓아요."},
+{"q":"낱말의 뜻으로 알맞은 것을 고르세요.<br><b class='en'>teacher</b>","choices":["교사, 선생","춤추는 사람, 무용수","급우, 반 친구","저녁 (식사)"],"answer":"교사, 선생","exp":"정답은 <b>교사, 선생</b>!<br>· <b>teach</b>(가르치다) + <b>-er</b> = 가르치는 <b>사람</b>이에요.<br>· 춤추는 사람은 <b>dancer</b>, 급우는 <b>classmate</b>, 저녁 식사는 <b>dinner</b>예요.<br>· 동사 + -er/-r = 그 일을 하는 사람! 이 규칙 하나로 여러 낱말이 풀려요."},
+{"q":"'교실, 강의실'을 뜻하는 낱말을 고르세요.","choices":["classroom","classmate","class room","clasroom"],"answer":"classroom","exp":"정답은 <b class='en'>classroom</b>!<br>· <b>class</b>(반) + <b>room</b>(방)을 <b>붙여서</b> 한 낱말로 써요.<br>· classmate는 class + mate = <b>반 친구</b>예요. 뒷부분으로 구별해요!<br>· class room처럼 띄어 쓰지 않고, clasroom처럼 s를 빠뜨리지도 않아요."},
+{"q":"'더러운'을 뜻하는 낱말을 고르세요.","choices":["dirty","dinner","dancer","day"],"answer":"dirty","exp":"정답은 <b class='en'>dirty</b>!<br>· <b>dirty</b> = 더러운 (반대말은 clean '깨끗한')<br>· dinner는 '저녁 (식사)', dancer는 '춤추는 사람', day는 '하루, 날'이에요.<br>· d로 시작하는 낱말이 많으니 <b>뒷부분까지</b> 꼼꼼히 읽어요!"},
+{"q":"<b class='en'>have fun</b>의 뜻으로 알맞은 것을 고르세요.","choices":["즐기다, 재미있게 놀다","외식하다","~처럼 보이다","하루 종일"],"answer":"즐기다, 재미있게 놀다","exp":"정답은 <b>즐기다, 재미있게 놀다</b>!<br>· <b>have</b>(가지다) + <b>fun</b>(재미) = 재미를 갖다 → <b>즐기다</b>. 그림이 그려지죠?<br>· 외식하다는 <b>eat out</b>, ~처럼 보이다는 <b>look like</b>, 하루 종일은 <b>all day (long)</b>이에요.<br>· 두 낱말이 모여 새 뜻이 되는 표현들을 한 묶음으로 외워요!"},
+{"q":"'몸, 신체'를 뜻하는 낱말의 <b>철자</b>로 알맞은 것을 고르세요.","choices":["body","bady","boddy","bodi"],"answer":"body","exp":"정답은 <b class='en'>body</b>!<br>· <b>bo · dy</b> 네 글자예요. 가운데는 a가 아니라 <b>o</b>랍니다.<br>· bady는 a가 들어갔고, boddy는 d를 두 번 썼고, bodi는 끝이 y가 아니에요.<br>· 함께 외워요 — <b>body</b> 몸 · <b>hobby</b> 취미 · <b>city</b> 도시 · <b>dirty</b> 더러운 (모두 <b>y</b>로 끝나요!)"},
+{"q":"<b class='en'>all day (long)</b>의 뜻으로 알맞은 것을 고르세요.","choices":["하루 종일","어제","~ 전에, 이전에","잠깐"],"answer":"하루 종일","exp":"정답은 <b>하루 종일</b>!<br>· <b>all</b>(모든) + <b>day</b>(하루) = 하루 전부 → <b>하루 종일</b>이에요.<br>· 어제는 <b>yesterday</b>, ~ 전에는 <b>ago</b>, 잠깐은 <b>minute</b>예요.<br>· 시간을 나타내는 낱말을 한 묶음으로 외워요 — yesterday · ago · all day (long) · minute · day"}
+];
+
+
+/* ══════════ 정답 영어 읽어 주기 — 문항별 읽을 문장 ══════════ */
+var SAY_ALL = [
+"What is it? It is an eraser.",
+"Who are they? They are my brothers.",
+"It is a pencil case.",
+"They are my brothers.",
+"Who are they?",
+"Who is she?",
+"What do you like?",
+"What does she have?",
+"What do flowers need?",
+"What does Josh drink?",
+"What do the children want?",
+"What does he want?",
+"What does he wear?",
+"What does the girl buy?",
+"What does he like?",
+"What does Josh drink?",
+"What do they practice?",
+"What does Jane study?",
+"What is it? It is an eraser.",
+"What is it?",
+"What does the cat eat?",
+"What does your sister study? She studies English.",
+"Who is he? He is my dad.",
+"What does the cat eat?",
+"dancer",
+"classmate",
+"wet",
+"look like",
+"minute",
+"eat out"
+];
+var SAY_CLINIC = [
+"What is it? It is a pencil case.",
+"Who are they? They are scientists.",
+"He drinks milk.",
+"He is my dad.",
+"Who are they?",
+"Who is he?",
+"What do you see?",
+"What does she eat?",
+"What do rabbits eat?",
+"What does Minho drink?",
+"What do the children want?",
+"What do you study?",
+"What does she have?",
+"What does it eat?",
+"What does the girl buy?",
+"What does he like?",
+"What do they study?",
+"What does he buy?",
+"What is it? It is a big kite.",
+"What is it?",
+"What does he want?",
+"What does Jane study? She studies math.",
+"Who are they? They are my brothers.",
+"What do they do after school?",
+"teacher",
+"classroom",
+"dirty",
+"have fun",
+"body",
+"all day long"
+];
+(function attachSay() {
+  ALL.forEach(function (q, i) { q.say = SAY_ALL[i] || ""; });
+  CLINIC.forEach(function (q, i) { q.say = SAY_CLINIC[i] || ""; });
+})();
+
+/* ══════════ 영역 · 카드 배치 ══════════ */
+var SECTIONS = [
+  { name: "1영역 · Who / What 구별",              start: 0,  end: 6,  cards: [A1, A2, A3] },
+  { name: "2영역 · do / does 고르기",             start: 6,  end: 12, cards: [B1, B2, B3] },
+  { name: "3영역 · do·does 뒤에는 동사원형",       start: 12, end: 18, cards: [C1, C2, C3] },
+  { name: "4영역 · be동사 의문문 vs do/does",      start: 18, end: 24, cards: [D1, D2, D3] },
+  { name: "5영역 · VOCA Day 03-04",              start: 24, end: 30, cards: [E1, E2, E3] }
+];
+var NSEC = SECTIONS.length;
+function secIndex(i) {
+  for (var s = 0; s < NSEC; s++) { if (i < SECTIONS[s].end) return s; }
+  return NSEC - 1;
+}
+var CARD_AT = {
+  0: A1, 2: A2, 4: A3,
+  6: B1, 8: B2, 10: B3,
+  12: C1, 14: C2, 16: C3,
+  18: D1, 20: D2, 22: D3,
+  24: E1, 26: E2, 28: E3
+};
+
+/* ══════════ 정답 위치 균등 분산 (같은 위치 3연속 금지) ══════════ */
+function shuffleArr(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function balancedAssign(n, k) {
+  var pool = [];
+  var base = Math.floor(n / k);
+  for (var p = 0; p < k; p++) { for (var c = 0; c < base; c++) pool.push(p); }
+  var remainder = n - pool.length;
+  var extra = shuffleArr([0, 1, 2, 3]).slice(0, remainder);
+  extra.forEach(function (p) { pool.push(p); });
+  return shuffleArr(pool);
+}
+function hasTripleRun(arr) {
+  for (var i = 2; i < arr.length; i++) {
+    if (arr[i] === arr[i - 1] && arr[i - 1] === arr[i - 2]) return true;
+  }
+  return false;
+}
+function balancedNoTriple(n, k) {
+  var t = balancedAssign(n, k);
+  for (var tries = 0; tries < 300 && hasTripleRun(t); tries++) t = balancedAssign(n, k);
+  return t;
+}
+function prepareList(list, from, to) {
+  var mcIdx = [];
+  for (var idx = from; idx < to; idx++) {
+    var q = list[idx];
+    if (q.t === "ord") {
+      var ti = [];
+      for (var z = 0; z < q.tiles.length; z++) ti.push(z);
+      q.shuffled = shuffleArr(ti);
+    } else { mcIdx.push(idx); }
+  }
+  var targets = balancedNoTriple(mcIdx.length, 4);
+  mcIdx.forEach(function (idx, mi) {
+    var q = list[idx];
+    var sh = shuffleArr(q.choices);
+    var cur = sh.indexOf(q.answer);
+    var tg = targets[mi];
+    var tmp = sh[tg]; sh[tg] = sh[cur]; sh[cur] = tmp;
+    q.shuffled = sh;
+  });
+}
+(function prepareAll() {
+  SECTIONS.forEach(function (sec) {
+    prepareList(ALL, sec.start, sec.end);
+    prepareList(CLINIC, sec.start, sec.end);
+  });
+})();
+
+/* ══════════ 정답 영어 소리로 듣기 ══════════ */
+var SOUND_KEY = "engfit-sound-on";
+var soundOn = true;
+try { soundOn = localStorage.getItem(SOUND_KEY) !== "off"; } catch (e) {}
+
+var EN_VOICE = null;
+function pickVoice() {
+  try {
+    var vs = window.speechSynthesis.getVoices() || [];
+    var en = vs.filter(function (v) { return /^en/i.test(v.lang || ""); });
+    EN_VOICE = en.filter(function (v) { return /en[-_]US/i.test(v.lang || ""); })[0] || en[0] || null;
+  } catch (e) {}
+}
+if (window.speechSynthesis) {
+  pickVoice();
+  try { window.speechSynthesis.onvoiceschanged = pickVoice; } catch (e) {}
+}
+
+/* iOS 등에서 첫 소리가 나오도록, 시작 버튼을 누를 때 미리 한 번 깨워 둔다 */
+var _voiceWarmed = false;
+function warmUpVoice() {
+  if (_voiceWarmed || !window.speechSynthesis) return;
+  _voiceWarmed = true;
+  try {
+    var u = new SpeechSynthesisUtterance(" ");
+    u.volume = 0; u.lang = "en-US";
+    window.speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+function showSayBar(text) {
+  var t = document.getElementById("saytext");
+  if (t) t.textContent = text;
+  var bar = document.getElementById("saybar");
+  if (bar) bar.classList.remove("hidden");
+}
+function hideSayBar() {
+  var bar = document.getElementById("saybar");
+  if (bar) bar.classList.add("hidden");
+}
+function stopSpeaking() {
+  try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {}
+  hideSayBar();
+}
+
+/* 정답 영어를 읽어 준 뒤 onDone 실행.
+   소리가 꺼져 있거나 브라우저가 지원하지 않으면 기다리지 않고 바로 넘어간다. */
+function speakAnswer(text, onDone) {
+  var done = false;
+  function finish() {
+    if (done) return;
+    done = true;
+    hideSayBar();
+    onDone();
+  }
+  if (!soundOn || !text || !window.speechSynthesis) { setTimeout(finish, 250); return; }
+  showSayBar(text);
+  try {
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    if (EN_VOICE) u.voice = EN_VOICE;
+    u.rate = 0.82;
+    u.pitch = 1;
+    u.onend = function () { setTimeout(finish, 400); };
+    u.onerror = finish;
+    window.speechSynthesis.speak(u);
+    /* 소리가 끝나지 않는 환경에서도 멈추지 않도록 하는 안전장치 */
+    setTimeout(finish, Math.min(11000, 2400 + text.length * 95));
+  } catch (e) { setTimeout(finish, 700); }
+}
+
+/* ══════════ 정답 음원 재생 (카톡 인앱 브라우저에서도 나오도록 파일 재생) ══════════ */
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+var AUDIO_EL = null;
+function getAudioEl() {
+  if (!AUDIO_EL) {
+    AUDIO_EL = new Audio();
+    AUDIO_EL.preload = "auto";
+  }
+  return AUDIO_EL;
+}
+function stopAudio() {
+  try { if (AUDIO_EL) { AUDIO_EL.pause(); AUDIO_EL.onended = null; AUDIO_EL.onerror = null; AUDIO_EL.onplaying = null; } } catch (e) {}
+}
+
+/* 정답 음원을 들려준 뒤 onDone 실행.
+   1순위 음원 파일 → 2순위 브라우저 읽기(TTS) → 3순위 그냥 넘어가기 */
+function playAnswer(file, text, onDone) {
+  var done = false;
+  function finish() {
+    if (done) return;
+    done = true;
+    stopAudio();
+    hideSayBar();
+    onDone();
+  }
+  if (!soundOn || !text) { setTimeout(finish, 250); return; }
+  showSayBar(text);
+
+  var usedFallback = false;
+  function fallback() {
+    if (done || usedFallback) return;
+    usedFallback = true;
+    stopAudio();
+    speakAnswer(text, finish);
+  }
+
+  var a = getAudioEl();
+  var startGuard = setTimeout(fallback, 2600);
+  try {
+    a.onplaying = function () { clearTimeout(startGuard); };
+    a.onended = function () { clearTimeout(startGuard); setTimeout(finish, 350); };
+    a.onerror = function () { clearTimeout(startGuard); fallback(); };
+    a.src = "audio/" + file + ".wav?v=1";
+    a.currentTime = 0;
+    var p = a.play();
+    if (p && p.catch) { p.catch(function () { clearTimeout(startGuard); fallback(); }); }
+  } catch (e) { clearTimeout(startGuard); fallback(); }
+
+  /* 어떤 경우에도 화면이 멈추지 않게 하는 최종 안전장치 */
+  setTimeout(finish, Math.min(13000, 4000 + text.length * 95));
+}
+
+/* ══════════ 진행 상태 ══════════ */
+var studentName = "";
+var current = 0;
+var answersLog = new Array(ALL.length).fill(null);
+var elapsed = new Array(NSEC).fill(0);
+var sent = new Array(NSEC).fill(false);
+var clinicSent = new Array(NSEC).fill(false);
+var lastTick = 0;
+var curSec = 0;
+var cardsShown = {};
+var pendingCard = 0;
+var MODE = "quiz";
+
+var clinicList = [];
+var clinicPos = 0;
+var clinicLog = [];
+var clinicSec = 0;
+
+var SAVE_KEY = "hanjueun-basic-20260907";
+function saveState() {
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify({
+      v: 1, name: studentName, current: current, log: answersLog,
+      elapsed: elapsed, sent: sent, clinicSent: clinicSent, cards: cardsShown,
+      choices: ALL.map(function (q) { return q.shuffled || null; })
+    }));
+  } catch (e) {}
+}
+function loadState() {
+  try {
+    var s = JSON.parse(localStorage.getItem(SAVE_KEY));
+    return (s && s.v === 1 && s.name && s.log) ? s : null;
+  } catch (e) { return null; }
+}
+function clearState() { try { localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+
+var ALL_CARDS = ["start-card", "resume-card", "cards-card", "quiz-card", "sec-result-card",
+                 "clinic-why-card", "clinic-card", "clinic-result-card"];
+function show(id) {
+  stopSpeaking();
+  stopAudio();
+  ALL_CARDS.forEach(function (c) {
+    document.getElementById(c).classList.toggle("hidden", c !== id);
+  });
+  if (id === "start-card") refreshSectionButtons();
+  window.scrollTo(0, 0);
+}
+
+function secDone(si) {
+  var s = SECTIONS[si];
+  for (var i = s.start; i < s.end; i++) { if (!answersLog[i]) return false; }
+  return true;
+}
+function firstUndoneSec() {
+  for (var i = 0; i < NSEC; i++) { if (!secDone(i)) return i; }
+  return -1;
+}
+function refreshSectionButtons() {
+  var doneList = [];
+  secBtns.forEach(function (btn, si) {
+    var done = secDone(si);
+    btn.classList.toggle("done", done);
+    if (done) doneList.push(si + 1);
+  });
+  var note = document.getElementById("sec-done-note");
+  if (note) {
+    note.textContent = doneList.length
+      ? "다 푼 영역: " + doneList.join("영역, ") + "영역 (다시 눌러 복습할 수 있어요)"
+      : "";
+  }
+}
+
+/* ══════════ 카드 → 문제 2개 ══════════ */
+function step() {
+  var si = secIndex(current);
+  curSec = si;
+  if (CARD_AT[current] && !cardsShown[current]) { showCardScreen(current); }
+  else { MODE = "quiz"; show("quiz-card"); showQuestion(); }
+}
+function showCardScreen(i) {
+  pendingCard = i;
+  var sec = SECTIONS[curSec];
+  var title = CARD_AT[i];
+  var pos = sec.cards.indexOf(title) + 1;
+  document.getElementById("card-num").textContent = "개념 카드 " + pos + " / " + sec.cards.length;
+  document.getElementById("card-sec").textContent = sec.name.split(" · ")[0];
+  document.getElementById("card-bar").style.width = (pos / sec.cards.length * 100) + "%";
+  document.getElementById("cardbox").innerHTML = "<h2>" + title + "</h2>" + (TIPS[title] || "");
+  show("cards-card");
+}
+function afterCard() {
+  cardsShown[pendingCard] = true;
+  saveState();
+  MODE = "quiz";
+  show("quiz-card");
+  showQuestion();
+}
+document.getElementById("card-next").addEventListener("click", afterCard);
+document.getElementById("card-skip").addEventListener("click", afterCard);
+
+/* ══════════ 시작 / 이어하기 ══════════ */
+var nameInput = document.getElementById("name-input");
+var secBtns = [].slice.call(document.querySelectorAll(".sec-start"));
+var soundBox = document.getElementById("sound-on");
+if (soundBox) {
+  soundBox.checked = soundOn;
+  soundBox.addEventListener("change", function () {
+    soundOn = soundBox.checked;
+    try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (e) {}
+    if (!soundOn) stopSpeaking();
+  });
+}
+var testBtn = document.getElementById("sound-test");
+var soundMsg = document.getElementById("sound-msg");
+function setMsg(txt, color) {
+  if (!soundMsg) return;
+  soundMsg.textContent = txt;
+  soundMsg.style.color = color;
+}
+if (testBtn) {
+  testBtn.addEventListener("click", function () {
+    warmUpVoice();
+    setMsg("소리를 내는 중이에요...", "#6B7B7E");
+    var a = getAudioEl();
+    var started = false;
+    a.onplaying = function () {
+      started = true;
+      setMsg("소리가 나오고 있어요! 안 들리면 휴대폰 볼륨을 올려 주세요.", "#2F7C83");
+    };
+    a.onended = function () {
+      if (started) setMsg("소리 확인 완료! 이제 시작해도 좋아요.", "#2F7C83");
+    };
+    a.onerror = function () {
+      setMsg("소리 파일을 못 불러왔어요. 아래 안내대로 다른 브라우저로 열어 주세요.", "#b5762f");
+    };
+    try {
+      a.src = "audio/test.wav?v=1";
+      a.currentTime = 0;
+      var p = a.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          setMsg("브라우저가 소리를 막았어요. 아래 안내대로 다른 브라우저로 열어 주세요.", "#b5762f");
+        });
+      }
+    } catch (e) {
+      setMsg("소리를 재생할 수 없어요. 아래 안내대로 다른 브라우저로 열어 주세요.", "#b5762f");
+    }
+  });
+}
+function syncNameGate() {
+  var ok = nameInput.value.trim().length > 0;
+  secBtns.forEach(function (b) { b.disabled = !ok; });
+}
+nameInput.addEventListener("input", syncNameGate);
+nameInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter" && nameInput.value.trim()) secBtns[0].click();
+});
+function startSection(si) {
+  var typed = nameInput.value.trim();
+  if (!typed) { nameInput.focus(); return; }
+  studentName = typed;
+  warmUpVoice();
+  var s = SECTIONS[si];
+  for (var i = s.start; i < s.end; i++) { answersLog[i] = null; }
+  elapsed[si] = 0;
+  sent[si] = false;
+  clinicSent[si] = false;
+  Object.keys(CARD_AT).forEach(function (k) { if (+k >= s.start && +k < s.end) delete cardsShown[k]; });
+  current = s.start;
+  curSec = si;
+  lastTick = Date.now();
+  saveState();
+  step();
+}
+secBtns.forEach(function (b) {
+  b.addEventListener("click", function () { startSection(parseInt(b.getAttribute("data-sec"), 10)); });
+});
+
+var savedState = loadState();
+function applySaved(s) {
+  studentName = s.name;
+  current = s.current;
+  answersLog = (s.log || []).slice(0, ALL.length);
+  while (answersLog.length < ALL.length) answersLog.push(null);
+  elapsed = s.elapsed || new Array(NSEC).fill(0);
+  while (elapsed.length < NSEC) elapsed.push(0);
+  sent = s.sent || new Array(NSEC).fill(false);
+  while (sent.length < NSEC) sent.push(false);
+  clinicSent = s.clinicSent || new Array(NSEC).fill(false);
+  while (clinicSent.length < NSEC) clinicSent.push(false);
+  cardsShown = s.cards || {};
+  if (s.choices) {
+    ALL.forEach(function (q, i) { if (s.choices[i]) q.shuffled = s.choices[i]; });
+  }
+}
+if (savedState && savedState.log && savedState.log.some(function (l) { return !!l; })) {
+  var doneCnt = savedState.log.filter(function (l) { return !!l; }).length;
+  document.getElementById("resume-info").textContent =
+    savedState.name + " · " + doneCnt + "문제까지 푼 기록이 있어요. 이어서 풀까요?";
+  show("resume-card");
+} else {
+  syncNameGate();
+}
+document.getElementById("resume-btn").addEventListener("click", function () {
+  applySaved(savedState);
+  nameInput.value = studentName;
+  syncNameGate();
+  lastTick = Date.now();
+  curSec = secIndex(Math.min(current, ALL.length - 1));
+  var prevSec = current > 0 ? secIndex(current - 1) : -1;
+  if (prevSec >= 0 && current === SECTIONS[prevSec].end && secDone(prevSec)) {
+    showSectionResult(prevSec);
+  } else if (current >= ALL.length) {
+    showSectionResult(NSEC - 1);
+  } else { step(); }
+});
+document.getElementById("restart-btn").addEventListener("click", function () {
+  clearState();
+  answersLog = new Array(ALL.length).fill(null);
+  elapsed = new Array(NSEC).fill(0);
+  sent = new Array(NSEC).fill(false);
+  clinicSent = new Array(NSEC).fill(false);
+  cardsShown = {}; current = 0;
+  nameInput.value = "";
+  syncNameGate();
+  show("start-card");
+});
+document.getElementById("pick-sec-btn").addEventListener("click", function () {
+  nameInput.value = studentName; syncNameGate(); show("start-card");
+});
+document.getElementById("cr-pick-btn").addEventListener("click", function () {
+  nameInput.value = studentName; syncNameGate(); show("start-card");
+});
+
+/* ══════════ 낱말 배열(ord) ══════════ */
+function ordNorm(s) {
+  return String(s).toLowerCase().replace(/[.,?!;:]/g, "").replace(/\s+/g, " ").trim();
+}
+var ordPicked = [];
+function renderOrd(q, box) {
+  ordPicked = [];
+  var help = document.createElement("p");
+  help.className = "ord-help";
+  help.innerHTML = "아래 낱말을 <b>순서대로</b> 눌러 주세요. 잘못 눌렀으면 위쪽 칸의 낱말을 다시 눌러 뺄 수 있어요.";
+  var slot = document.createElement("div"); slot.className = "ord-slot";
+  var pool = document.createElement("div"); pool.className = "ord-pool";
+  var okBtn = document.createElement("button");
+  okBtn.className = "btn center"; okBtn.textContent = "다 골랐어요 · 확인하기"; okBtn.disabled = true;
+  var reBtn = document.createElement("button");
+  reBtn.className = "btn sub-btn center"; reBtn.textContent = "처음부터 다시 배열하기";
+  box.appendChild(help); box.appendChild(slot); box.appendChild(pool);
+  box.appendChild(okBtn); box.appendChild(reBtn);
+  function draw() {
+    slot.innerHTML = "";
+    if (ordPicked.length === 0) {
+      var ph = document.createElement("span");
+      ph.className = "ord-ph"; ph.textContent = "여기에 문장이 만들어져요";
+      slot.appendChild(ph);
+    }
+    ordPicked.forEach(function (ti, pos) {
+      var b = document.createElement("button");
+      b.className = "ord-tile picked"; b.textContent = q.tiles[ti];
+      b.addEventListener("click", function () { ordPicked.splice(pos, 1); draw(); });
+      slot.appendChild(b);
+    });
+    pool.innerHTML = "";
+    q.shuffled.forEach(function (ti) {
+      if (ordPicked.indexOf(ti) >= 0) return;
+      var b = document.createElement("button");
+      b.className = "ord-tile"; b.textContent = q.tiles[ti];
+      b.addEventListener("click", function () { ordPicked.push(ti); draw(); });
+      pool.appendChild(b);
+    });
+    okBtn.disabled = (ordPicked.length !== q.tiles.length);
+  }
+  reBtn.addEventListener("click", function () { ordPicked = []; draw(); });
+  okBtn.addEventListener("click", function () {
+    if (ordPicked.length !== q.tiles.length) return;
+    pick(ordPicked.map(function (ti) { return q.tiles[ti]; }).join(" "));
+  });
+  draw();
+}
+
+/* ══════════ 문제 표시 ══════════ */
+var CIRCLED = ["①", "②", "③", "④"];
+function showQuestion() {
+  var q = ALL[current];
+  var si = secIndex(current);
+  curSec = si;
+  var sec = SECTIONS[si];
+  document.getElementById("prog-num").textContent =
+    sec.name.split(" · ")[0] + "  ·  " + (current - sec.start + 1) + " / " + (sec.end - sec.start);
+  document.getElementById("prog-pct").textContent = "전체 " + Math.round(current / ALL.length * 100) + "%";
+  document.getElementById("bar-fill").style.width = ((current - sec.start) / (sec.end - sec.start) * 100) + "%";
+  document.getElementById("srctag").textContent = q.src;
+  document.getElementById("tipinner").innerHTML = "<b>" + q.src + "</b><br>" + (TIPS[q.src] || "");
+  document.getElementById("tipbox").open = false;
+  document.getElementById("qtext").innerHTML = "Q" + (current + 1) + ". " + q.q;
+  var box = document.getElementById("choices");
+  box.innerHTML = "";
+  document.getElementById("keyhint").classList.toggle("hidden", q.t === "ord");
+  if (q.t === "ord") { renderOrd(q, box); lastTick = Date.now(); window.scrollTo(0, 0); return; }
+  q.shuffled.forEach(function (c, i) {
+    var b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = '<span class="num">' + CIRCLED[i] + "</span>" + c;
+    b.addEventListener("click", function () { pick(c); });
+    box.appendChild(b);
+  });
+  lastTick = Date.now();
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener("keydown", function (e) {
+  var n = parseInt(e.key, 10);
+  if (!(n >= 1 && n <= 4)) return;
+  if (MODE === "quiz" && !document.getElementById("quiz-card").classList.contains("hidden")) {
+    var q = ALL[current];
+    if (q && q.shuffled && q.t !== "ord" && n <= q.shuffled.length) pick(q.shuffled[n - 1]);
+  } else if (MODE === "clinic" && !document.getElementById("clinic-card").classList.contains("hidden")) {
+    var cq = CLINIC[clinicList[clinicPos]];
+    if (cq && cq.shuffled && cq.t !== "ord" && n <= cq.shuffled.length) pick(cq.shuffled[n - 1]);
+  }
+});
+
+var locked = false;
+function pick(choice) {
+  if (locked) return; locked = true;
+  if (MODE === "clinic") { clinicAnswer(choice); return; }
+  var q = ALL[current];
+  var si = secIndex(current);
+  var ok = (q.t === "ord") ? (ordNorm(choice) === ordNorm(q.answer)) : (choice === q.answer);
+  answersLog[current] = { no: current + 1, ok: ok, chosen: choice, answer: q.answer };
+  elapsed[si] += Math.min(180, Math.round((Date.now() - lastTick) / 1000));
+  var qi = current;
+  current++;
+  saveState();
+  playAnswer("q" + pad2(qi + 1), q.say, function () {
+    locked = false;
+    if (current === SECTIONS[si].end) showSectionResult(si);
+    else step();
+  });
+}
+
+/* ══════════ 공통 도구 ══════════ */
+function copyText(btn, text, doneLabel) {
+  navigator.clipboard.writeText(text).then(function () {
+    btn.textContent = doneLabel;
+  }).catch(function () {
+    prompt("아래 내용을 길게 눌러 복사하세요", text);
+  });
+}
+function plain(s) { return String(s).replace(/<[^>]*>/g, ""); }
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+
+function secStats(si) {
+  var sec = SECTIONS[si];
+  var slice = answersLog.slice(sec.start, sec.end).filter(function (l) { return !!l; });
+  var score = slice.filter(function (l) { return l.ok; }).length;
+  var wrong = slice.filter(function (l) { return !l.ok; }).map(function (l) { return l.no; });
+  return { slice: slice, score: score, total: sec.end - sec.start, wrong: wrong };
+}
+function sectionMsg(si) {
+  var st = secStats(si);
+  return "[영핏 기초개념 다지기 " + (si + 1) + "/" + NSEC + " 결과]\n학생: " + studentName +
+         "\n영역: " + SECTIONS[si].name +
+         "\n점수: " + st.score + "/" + st.total +
+         "\n풀이 시간: " + Math.max(1, Math.round(elapsed[si] / 60)) + "분" +
+         "\n틀린 문항: " + (st.wrong.length ? st.wrong.join(", ") : "없음") +
+         "\n- 영핏 지나티처";
+}
+function totalMsg() {
+  var parts = SECTIONS.map(function (s, si) {
+    var st = secStats(si);
+    return (si + 1) + "영역 " + st.score + "/" + st.total;
+  });
+  var done = answersLog.filter(function (l) { return !!l; });
+  var totalScore = done.filter(function (l) { return l.ok; }).length;
+  var allWrong = done.filter(function (l) { return !l.ok; }).map(function (l) { return l.no; });
+  return "[영핏 기초개념 다지기 최종 결과]\n학생: " + studentName +
+         "\n내용: UNIT 08-09 (What/Who + do·does) + VOCA Day 03-04 (30문항)" +
+         "\n" + parts.join(" / ") +
+         "\n총점: " + totalScore + "/" + ALL.length +
+         "\n틀린 문항: " + (allWrong.length ? allWrong.join(", ") : "없음") +
+         "\n- 영핏 지나티처";
+}
+function clinicMsg() {
+  var score = clinicLog.filter(function (l) { return l && l.ok; }).length;
+  return "[영핏 오답 클리닉 결과]\n학생: " + studentName +
+         "\n영역: " + SECTIONS[clinicSec].name +
+         "\n클리닉 점수: " + score + "/" + clinicLog.length +
+         "\n다시 풀어 본 문항: " + clinicList.map(function (i) { return i + 1; }).join(", ") +
+         "\n- 영핏 지나티처";
+}
+
+/* ══════════ 영역 결과 ══════════ */
+function showSectionResult(si) {
+  MODE = "quiz";
+  var st = secStats(si);
+  var allDone = firstUndoneSec() === -1;
+  document.getElementById("sec-result-title").textContent =
+    allDone ? "모든 영역 완료! 정말 수고했어요" : (si + 1) + "영역 완료! 잘했어요";
+  document.getElementById("sec-score").textContent = st.score + " / " + st.total;
+  document.getElementById("sec-wrong").textContent =
+    st.wrong.length ? "틀린 문항: " + st.wrong.join(", ") + " — 아래 해설을 읽고 오답 클리닉으로 한 번 더 잡아요!"
+                    : "이 영역 전부 정답! 최고예요";
+
+  var copyBtn = document.getElementById("sec-copy-btn");
+  copyBtn.textContent = (si + 1) + "영역 결과 복사 (카톡용)";
+  copyBtn.onclick = function () { copyText(copyBtn, sectionMsg(si), "복사 완료! 카톡에 붙여넣기 하세요"); };
+
+  var clinicBtn = document.getElementById("clinic-start-btn");
+  if (st.wrong.length) {
+    clinicBtn.classList.remove("hidden");
+    clinicBtn.textContent = "오답 클리닉 시작 · " + st.wrong.length + "문제 다시 잡기";
+    clinicBtn.onclick = function () { startClinic(si); };
+  } else {
+    clinicBtn.classList.add("hidden");
+  }
+
+  var nextBtn = document.getElementById("next-sec-btn");
+  var nextSi = firstUndoneSec();
+  if (allDone) {
+    nextBtn.classList.add("hidden");
+    var totalScore = answersLog.filter(function (l) { return l && l.ok; }).length;
+    document.getElementById("total-block").classList.remove("hidden");
+    document.getElementById("total-score").textContent = totalScore + " / " + ALL.length;
+    document.getElementById("total-detail").textContent =
+      SECTIONS.map(function (s, idx) { var t = secStats(idx); return (idx + 1) + "영역 " + t.score + "/" + t.total; }).join("  ·  ");
+    var totalBtn = document.getElementById("total-copy-btn");
+    totalBtn.onclick = function () { copyText(totalBtn, totalMsg(), "복사 완료! 카톡에 붙여넣기 하세요"); };
+  } else {
+    nextBtn.classList.remove("hidden");
+    document.getElementById("total-block").classList.add("hidden");
+    nextBtn.textContent = "쉬었다가 " + (nextSi + 1) + "영역 개념 카드 보기";
+    nextBtn.onclick = function () { current = SECTIONS[nextSi].start; curSec = nextSi; lastTick = Date.now(); saveState(); step(); };
+  }
+
+  var expBox = document.getElementById("sec-explanations");
+  expBox.innerHTML = "";
+  st.slice.forEach(function (log) {
+    var q = ALL[log.no - 1];
+    var d = document.createElement("div");
+    d.className = "exp" + (log.ok ? "" : " wrong");
+    var ansLine = log.ok ? "" :
+      '<span class="ans-line">내가 고른 답: ' + esc(plain(log.chosen)) + " → 정답: " + esc(plain(q.answer)) + "</span>";
+    d.innerHTML = '<div class="exp-head"><b>Q' + log.no + " " +
+      (log.ok ? "정답!" : "오답 - 다시 보기") + "</b></div>" + ansLine + q.exp;
+    expBox.appendChild(d);
+  });
+
+  if (!sent[si]) {
+    sent[si] = true;
+    saveState();
+    engfitSubmit({
+      quizId: "basic-hje-0907-p" + (si + 1),
+      quizTitle: "한주은 기초개념 다지기 9/7 — " + (si + 1) + "영역",
+      student: studentName,
+      score: st.score,
+      total: st.total,
+      wrong: st.wrong,
+      durationSec: elapsed[si],
+      detail: st.slice
+    });
+  }
+  show("sec-result-card");
+}
+
+/* ══════════ 오답 클리닉 ══════════ */
+function startClinic(si) {
+  clinicSec = si;
+  var st = secStats(si);
+  clinicList = st.wrong.map(function (no) { return no - 1; });
+  clinicPos = 0;
+  clinicLog = [];
+  MODE = "clinic";
+  lastTick = Date.now();
+  showWhy();
+}
+function showWhy() {
+  var idx = clinicList[clinicPos];
+  var q = ALL[idx];
+  var log = answersLog[idx];
+  document.getElementById("why-num").textContent =
+    "왜 틀렸을까?  " + (clinicPos + 1) + " / " + clinicList.length;
+  document.getElementById("why-bar").style.width = (clinicPos / clinicList.length * 100) + "%";
+  document.getElementById("whybox").innerHTML =
+    "<h2>Q" + (idx + 1) + " · 왜 틀렸을까?</h2>" +
+    '<span class="row"><span class="k">문제</span><br>' + q.q + "</span>" +
+    '<span class="row"><span class="k">내가 고른 답</span> ' + esc(plain(log ? log.chosen : "")) + "<br>" +
+    '<span class="k">정답</span> ' + esc(plain(q.answer)) + "</span>" +
+    q.exp;
+  document.getElementById("rulebox").innerHTML =
+    '<span class="h">규칙 다시 보기 — ' + q.src + "</span>" + (TIPS[q.src] || "");
+  show("clinic-why-card");
+}
+document.getElementById("why-next").addEventListener("click", function () {
+  MODE = "clinic";
+  show("clinic-card");
+  showClinicQuestion();
+});
+function showClinicQuestion() {
+  var idx = clinicList[clinicPos];
+  var cq = CLINIC[idx];
+  document.getElementById("cq-num").textContent =
+    "클리닉 문제  " + (clinicPos + 1) + " / " + clinicList.length;
+  document.getElementById("cq-bar").style.width = ((clinicPos + 0.5) / clinicList.length * 100) + "%";
+  document.getElementById("cq-src").textContent = "Q" + (idx + 1) + " 같은 개념 · " + ALL[idx].src;
+  document.getElementById("cq-text").innerHTML = cq.q;
+  var box = document.getElementById("cq-choices");
+  box.innerHTML = "";
+  document.getElementById("cq-keyhint").classList.toggle("hidden", cq.t === "ord");
+  if (cq.t === "ord") { renderOrd(cq, box); lastTick = Date.now(); window.scrollTo(0, 0); return; }
+  cq.shuffled.forEach(function (c, i) {
+    var b = document.createElement("button");
+    b.className = "choice";
+    b.innerHTML = '<span class="num">' + CIRCLED[i] + "</span>" + c;
+    b.addEventListener("click", function () { pick(c); });
+    box.appendChild(b);
+  });
+  lastTick = Date.now();
+  window.scrollTo(0, 0);
+}
+function clinicAnswer(choice) {
+  var idx = clinicList[clinicPos];
+  var cq = CLINIC[idx];
+  var ok = (cq.t === "ord") ? (ordNorm(choice) === ordNorm(cq.answer)) : (choice === cq.answer);
+  clinicLog.push({ no: idx + 1, ok: ok, chosen: choice, answer: cq.answer });
+  clinicPos++;
+  playAnswer("c" + pad2(idx + 1), cq.say, function () {
+    locked = false;
+    if (clinicPos >= clinicList.length) showClinicResult();
+    else showWhy();
+  });
+}
+function showClinicResult() {
+  MODE = "quiz";
+  var score = clinicLog.filter(function (l) { return l.ok; }).length;
+  var total = clinicLog.length;
+  document.getElementById("cr-score").textContent = score + " / " + total;
+  document.getElementById("cr-title").textContent =
+    (score === total) ? "오답 클리닉 전부 정답! 완벽해요" : "오답 클리닉 완료! 수고했어요";
+  document.getElementById("cr-msg").textContent =
+    (score === total)
+      ? "틀렸던 곳을 전부 다시 잡았어요. 이제 이 개념은 주은이 것이에요!"
+      : "한 번 더 보면 확실해져요. 아래 해설을 소리 내어 읽어 보세요.";
+
+  var crCopy = document.getElementById("cr-copy-btn");
+  crCopy.textContent = "클리닉 결과 복사 (카톡용)";
+  crCopy.onclick = function () { copyText(crCopy, clinicMsg(), "복사 완료! 카톡에 붙여넣기 하세요"); };
+
+  var nextSi = firstUndoneSec();
+  var crNext = document.getElementById("cr-next-btn");
+  if (nextSi === -1) {
+    crNext.textContent = "영역 결과 화면으로 돌아가기";
+    crNext.onclick = function () { showSectionResult(clinicSec); };
+  } else {
+    crNext.textContent = "쉬었다가 " + (nextSi + 1) + "영역 개념 카드 보기";
+    crNext.onclick = function () { current = SECTIONS[nextSi].start; curSec = nextSi; lastTick = Date.now(); saveState(); step(); };
+  }
+
+  var box = document.getElementById("cr-explanations");
+  box.innerHTML = "";
+  clinicLog.forEach(function (log, i) {
+    var idx = clinicList[i];
+    var cq = CLINIC[idx];
+    var d = document.createElement("div");
+    d.className = "exp" + (log.ok ? "" : " wrong");
+    var ansLine = log.ok ? "" :
+      '<span class="ans-line">내가 고른 답: ' + esc(plain(log.chosen)) + " → 정답: " + esc(plain(cq.answer)) + "</span>";
+    d.innerHTML = '<div class="exp-head"><b>Q' + (idx + 1) + " 클리닉 " +
+      (log.ok ? "정답!" : "다시 보기") + "</b></div>" + ansLine + cq.exp;
+    box.appendChild(d);
+  });
+
+  if (!clinicSent[clinicSec]) {
+    clinicSent[clinicSec] = true;
+    saveState();
+    engfitSubmit({
+      quizId: "basic-hje-0907-p" + (clinicSec + 1) + "-clinic",
+      quizTitle: "한주은 오답 클리닉 9/7 — " + (clinicSec + 1) + "영역",
+      student: studentName,
+      score: score,
+      total: total,
+      wrong: clinicLog.filter(function (l) { return !l.ok; }).map(function (l) { return l.no; }),
+      durationSec: 0,
+      detail: clinicLog
+    });
+  }
+  show("clinic-result-card");
+}
+</script>
+</body>
+</html>
